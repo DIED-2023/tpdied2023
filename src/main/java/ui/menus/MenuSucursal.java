@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ui.sucursal.AltaSucursal;
+import ui.sucursal.BajaSucursal;
+import ui.sucursal.ModificarSucursal;
 
 @SuppressWarnings("serial")
 public class MenuSucursal extends JPanel {
@@ -50,7 +52,9 @@ public class MenuSucursal extends JPanel {
 		gbc.gridy = 0;
 		this.add(btnBaja, gbc);
 		btnBaja.addActionListener(e -> {
-			// TODO: Hacer ventana de baja
+			ventana.setTitle("TP DIED 2023 - Baja Sucursal");
+			ventana.setContentPane(new BajaSucursal(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnModificar = new JButton("Modificar");
@@ -58,7 +62,9 @@ public class MenuSucursal extends JPanel {
 		gbc.gridy = 1;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			// TODO: Hacer ventana de modificar
+			ventana.setTitle("TP DIED 2023 - Modificar Sucursal");
+			ventana.setContentPane(new ModificarSucursal(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnConsulta = new JButton("Consulta");
