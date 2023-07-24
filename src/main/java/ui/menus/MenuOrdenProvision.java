@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ui.ordenprovision.AltaOrdenProvision;
+import ui.ordenprovision.BajaOrdenProvision;
+import ui.ordenprovision.ModificarOrdenProvision;
+
 @SuppressWarnings("serial")
 public class MenuOrdenProvision extends JPanel {
 	private JFrame ventana;
@@ -38,7 +42,9 @@ public class MenuOrdenProvision extends JPanel {
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(btnAlta, gbc);
 		btnAlta.addActionListener(e -> {
-			// TODO: Hacer ventana de alta
+			ventana.setTitle("TP DIED 2023 - Alta Orden Provision");
+			ventana.setContentPane(new AltaOrdenProvision(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnBaja = new JButton("Baja");
@@ -46,7 +52,9 @@ public class MenuOrdenProvision extends JPanel {
 		gbc.gridy = 0;
 		this.add(btnBaja, gbc);
 		btnBaja.addActionListener(e -> {
-			// TODO: Hacer ventana de baja
+			ventana.setTitle("TP DIED 2023 - Baja Orden Provision");
+			ventana.setContentPane(new BajaOrdenProvision(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnModificar = new JButton("Modificar");
@@ -54,7 +62,9 @@ public class MenuOrdenProvision extends JPanel {
 		gbc.gridy = 1;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			// TODO: Hacer ventana de modificar
+			ventana.setTitle("TP DIED 2023 - Modificar Orden Provision");
+			ventana.setContentPane(new ModificarOrdenProvision(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnConsulta = new JButton("Consulta");

@@ -1,6 +1,5 @@
-package ui.sucursal;
+package ui.producto;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,24 +9,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class BajaSucursal extends JPanel{
+public class ModificarProducto extends JPanel {
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
 	private JLabel lblNombre;
 	private JTextField txtNombre;
-	private JTable tabla;
-	private JButton btnEliminar;
+	private JLabel lblDescripcion;
+	private JTextField txtDescripcion;
+	private JLabel lblPrecioUnitario;
+	private JTextField txtPrecioUnitario;
+	private JLabel lblPesoKg;
+	private JTextField txtPesoKg;
+
+	private JButton btnModificar;
 	private JButton btnCancelar;
 	
-	public BajaSucursal(JFrame ventana, JPanel panelPadre) {
+	public ModificarProducto(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -42,6 +43,7 @@ public class BajaSucursal extends JPanel{
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.weightx = 0.5;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblNombre, gbc);
 		
@@ -51,49 +53,61 @@ public class BajaSucursal extends JPanel{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtNombre,gbc);
 		
-		DefaultTableModel modelo = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Para que las celdas no sean editables
-                return false;
-            }
-        };
-        modelo.addColumn("Nombre Sucursal");
-        for (int i = 0; i < 5; i++) {
-            modelo.addRow(new Object[]{""});
-        }
-		
-		tabla = new JTable(modelo);
-		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(300, 80));
+		lblDescripcion = new JLabel("DESCRIPCION:");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(new JScrollPane(tabla), gbc);
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(lblDescripcion,gbc);
 		
-		btnEliminar = new JButton("Eliminar");
+		txtDescripcion = new JTextField();
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.add(txtDescripcion,gbc);
+		
+		lblPrecioUnitario = new JLabel("PRECIO UNITARIO:");
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(lblPrecioUnitario, gbc);
+		
+		txtPrecioUnitario = new JTextField();
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.add(txtPrecioUnitario, gbc);
+		
+		lblPesoKg = new JLabel("PESO (KG):");
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(lblPesoKg, gbc);
+		
+		txtPesoKg = new JTextField();
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.add(txtPesoKg, gbc);
+		
+		
+		btnModificar = new JButton("Modificar");
+		gbc.gridx = 0;
+		gbc.gridy = 5;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0;
-		this.add(btnEliminar, gbc);
-		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton aceptar
+		this.add(btnModificar, gbc);
+		btnModificar.addActionListener(e -> {
+			//TODO: Agregar funcionamiento boton guardar
 		});
 		
 		btnCancelar = new JButton("Cancelar");
 		gbc.gridx = 1;
-		gbc.gridy = 2;
+		gbc.gridy = 5;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de sucursal?";
+				String mensaje = "¿Deseas cancelar la modificación de producto?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -104,7 +118,7 @@ public class BajaSucursal extends JPanel{
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
+					ventana.setTitle("TP DIEDE 2023 - Menú Producto");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}

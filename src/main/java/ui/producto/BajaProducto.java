@@ -1,4 +1,4 @@
-package ui.sucursal;
+package ui.producto;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -17,7 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class BajaSucursal extends JPanel{
+public class BajaProducto extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
@@ -27,7 +27,7 @@ public class BajaSucursal extends JPanel{
 	private JButton btnEliminar;
 	private JButton btnCancelar;
 	
-	public BajaSucursal(JFrame ventana, JPanel panelPadre) {
+	public BajaProducto(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -58,7 +58,7 @@ public class BajaSucursal extends JPanel{
                 return false;
             }
         };
-        modelo.addColumn("Nombre Sucursal");
+        modelo.addColumn("Nombre Producto");
         for (int i = 0; i < 5; i++) {
             modelo.addRow(new Object[]{""});
         }
@@ -93,7 +93,7 @@ public class BajaSucursal extends JPanel{
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de sucursal?";
+				String mensaje = "¿Deseas cancelar la baja de producto?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -104,7 +104,7 @@ public class BajaSucursal extends JPanel{
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
+					ventana.setTitle("TP DIEDE 2023 - Menú Producto");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}

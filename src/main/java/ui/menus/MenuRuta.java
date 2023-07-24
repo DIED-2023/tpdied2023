@@ -8,6 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ui.ruta.AltaRuta;
+import ui.ruta.BajaRuta;
+import ui.ruta.ModificarRuta;
+
+
 @SuppressWarnings("serial")
 public class MenuRuta extends JPanel{
 	private JFrame ventana;
@@ -38,7 +43,9 @@ public class MenuRuta extends JPanel{
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(btnAlta, gbc);
 		btnAlta.addActionListener(e -> {
-			// TODO: Hacer ventana de alta
+			ventana.setTitle("TP DIED 2023 - Alta Ruta");
+			ventana.setContentPane(new AltaRuta(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnBaja = new JButton("Baja");
@@ -46,7 +53,9 @@ public class MenuRuta extends JPanel{
 		gbc.gridy = 0;
 		this.add(btnBaja, gbc);
 		btnBaja.addActionListener(e -> {
-			// TODO: Hacer ventana de baja
+			ventana.setTitle("TP DIED 2023 - Baja Ruta");
+			ventana.setContentPane(new BajaRuta(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnModificar = new JButton("Modificar");
@@ -54,7 +63,9 @@ public class MenuRuta extends JPanel{
 		gbc.gridy = 1;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			// TODO: Hacer ventana de modificar
+			ventana.setTitle("TP DIED 2023 - Modificar Ruta");
+			ventana.setContentPane(new ModificarRuta(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnConsulta = new JButton("Consulta");

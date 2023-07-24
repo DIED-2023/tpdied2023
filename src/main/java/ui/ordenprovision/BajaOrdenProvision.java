@@ -1,4 +1,4 @@
-package ui.sucursal;
+package ui.ordenprovision;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -16,18 +16,19 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+
 @SuppressWarnings("serial")
-public class BajaSucursal extends JPanel{
+public class BajaOrdenProvision extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
-	private JLabel lblNombre;
-	private JTextField txtNombre;
+	private JLabel lblNombreSucursal;
+	private JTextField txtNombreSucursal;
 	private JTable tabla;
 	private JButton btnEliminar;
 	private JButton btnCancelar;
 	
-	public BajaSucursal(JFrame ventana, JPanel panelPadre) {
+	public BajaOrdenProvision(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -36,20 +37,23 @@ public class BajaSucursal extends JPanel{
 	}
 	
 	public void armarPanel() {
-		lblNombre = new JLabel("NOMBRE:");
+		
+		lblNombreSucursal = new JLabel("NOMBRE SUCURSAL:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.weightx = 0.5;
 		gbc.insets = new Insets(10, 10, 10, 10);
-		this.add(lblNombre, gbc);
+		this.add(lblNombreSucursal, gbc);
 		
-		txtNombre = new JTextField();
+		txtNombreSucursal = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtNombre,gbc);
+		this.add(txtNombreSucursal,gbc);
+	
 		
 		DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -58,7 +62,10 @@ public class BajaSucursal extends JPanel{
                 return false;
             }
         };
-        modelo.addColumn("Nombre Sucursal");
+        modelo.addColumn("Sucursal");
+        modelo.addColumn("Estado");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Tiempo Maximo");
         for (int i = 0; i < 5; i++) {
             modelo.addRow(new Object[]{""});
         }
@@ -93,7 +100,7 @@ public class BajaSucursal extends JPanel{
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de sucursal?";
+				String mensaje = "¿Deseas cancelar la baja de orden de provision?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -104,7 +111,7 @@ public class BajaSucursal extends JPanel{
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
+					ventana.setTitle("TP DIEDE 2023 - Menú Orden Provision");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}

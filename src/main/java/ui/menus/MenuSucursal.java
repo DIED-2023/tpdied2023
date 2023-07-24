@@ -63,7 +63,7 @@ public class MenuSucursal extends JPanel {
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
 			ventana.setTitle("TP DIED 2023 - Modificar Sucursal");
-			ventana.setContentPane(new ModificarSucursal(ventana, this));
+			ventana.setContentPane(new ModificarSucursal(ventana,this));
 			ventana.setVisible(true);
 		});
 		

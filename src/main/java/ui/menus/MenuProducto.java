@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ui.producto.AltaProducto;
+import ui.producto.BajaProducto;
+import ui.producto.ModificarProducto;
+
 @SuppressWarnings("serial")
 public class MenuProducto extends JPanel {
 	private JFrame ventana;
@@ -38,7 +42,9 @@ public class MenuProducto extends JPanel {
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(btnAlta, gbc);
 		btnAlta.addActionListener(e -> {
-			// TODO: Hacer ventana de alta
+			ventana.setTitle("TP DIED 2023 - Alta Producto");
+			ventana.setContentPane(new AltaProducto(ventana,this));
+			ventana.setVisible(true);
 		});
 		
 		btnBaja = new JButton("Baja");
@@ -46,7 +52,9 @@ public class MenuProducto extends JPanel {
 		gbc.gridy = 0;
 		this.add(btnBaja, gbc);
 		btnBaja.addActionListener(e -> {
-			// TODO: Hacer ventana de baja
+			ventana.setTitle("TP DIED 2023 - Baja Producto");
+			ventana.setContentPane(new BajaProducto(ventana,this));
+			ventana.setVisible(true);
 		});
 		
 		btnModificar = new JButton("Modificar");
@@ -54,7 +62,9 @@ public class MenuProducto extends JPanel {
 		gbc.gridy = 1;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			// TODO: Hacer ventana de modificar
+			ventana.setTitle("TP DIED 2023 - Modificar Producto");
+			ventana.setContentPane(new ModificarProducto(ventana,this));
+			ventana.setVisible(true);
 		});
 		
 		btnConsulta = new JButton("Consulta");

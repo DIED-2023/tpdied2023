@@ -17,17 +17,17 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class BajaSucursal extends JPanel{
+public class ConsultaSucursal extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
 	private JLabel lblNombre;
 	private JTextField txtNombre;
 	private JTable tabla;
-	private JButton btnEliminar;
+	private JButton btnBuscar;
 	private JButton btnCancelar;
-	
-	public BajaSucursal(JFrame ventana, JPanel panelPadre) {
+
+	public ConsultaSucursal(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -51,6 +51,41 @@ public class BajaSucursal extends JPanel{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtNombre,gbc);
 		
+		btnBuscar = new JButton("Buscar");
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.weightx = 0;
+		this.add(btnBuscar, gbc);
+		btnBuscar.addActionListener(e -> {
+			//TODO: Agregar funcionamiento boton buscar
+		});
+		
+		btnCancelar = new JButton("Cancelar");
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbc.anchor = GridBagConstraints.WEST;
+		this.add(btnCancelar, gbc);
+		btnCancelar.addActionListener(e -> {
+				String mensaje = "¿Deseas cancelar la consulta de sucursales?";
+				int confirmado = JOptionPane.showOptionDialog(
+						this, 
+						mensaje, 
+						"CONFIRMACION", 
+						JOptionPane.YES_NO_OPTION, 
+						JOptionPane.QUESTION_MESSAGE, 
+						null, 
+						new Object[] {"SI","NO"}, 
+						"SI");
+				if(confirmado == 0) {
+					ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
+					ventana.setContentPane(panelPadre);
+					ventana.setVisible(true);
+				}
+		});
+		
 		DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -72,42 +107,5 @@ public class BajaSucursal extends JPanel{
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(new JScrollPane(tabla), gbc);
-		
-		btnEliminar = new JButton("Eliminar");
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		gbc.anchor = GridBagConstraints.EAST;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
-		this.add(btnEliminar, gbc);
-		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton aceptar
-		});
-		
-		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.anchor = GridBagConstraints.WEST;
-		this.add(btnCancelar, gbc);
-		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de sucursal?";
-				int confirmado = JOptionPane.showOptionDialog(
-						this, 
-						mensaje, 
-						"CONFIRMACION", 
-						JOptionPane.YES_NO_OPTION, 
-						JOptionPane.QUESTION_MESSAGE, 
-						null, 
-						new Object[] {"SI","NO"}, 
-						"SI");
-				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
-					ventana.setContentPane(panelPadre);
-					ventana.setVisible(true);
-				}
-		});
 	}
 }

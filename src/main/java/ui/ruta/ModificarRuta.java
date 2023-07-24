@@ -1,4 +1,4 @@
-package ui.sucursal;
+package ui.ruta;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,28 +12,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import dominio.EstadoSucursal;
-import dominio.TipoSucursal;
+import dominio.EstadoRuta;
+import dto.SucursalComboBoxDTO;
 
 @SuppressWarnings("serial")
-public class ModificarSucursal extends JPanel {
+public class ModificarRuta extends JPanel {
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
-	private JLabel lblNombre;
-	private JTextField txtNombre;
-	private JLabel lblHorarioApertura;
-	private JTextField txtHorarioApertura;
-	private JLabel lblHorarioCierre;
-	private JTextField txtHorarioCierre;
+	private JLabel lblSucursalOrigen;
+	private JComboBox<SucursalComboBoxDTO> cbSucursalOrigen;
+	private JLabel lblSucursalDestino;
+	private JComboBox<SucursalComboBoxDTO> cbSucursalDestino;
+	private JLabel lblCapacidad;
+	private JTextField txtCapacidad;
+	private JLabel lblDuracion;
+	private JTextField txtDuracion;
 	private JLabel lblEstado;
-	private JComboBox<EstadoSucursal> cbEstado;
-	private JLabel lblTipoSucursal;
-	private JComboBox<TipoSucursal> cbTipo;
+	private JComboBox<EstadoRuta> cbEstado;
+	
 	private JButton btnModificar;
 	private JButton btnCancelar;
 
-	public ModificarSucursal(JFrame ventana, JPanel panelPadre) {
+	public ModificarRuta(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -42,7 +43,7 @@ public class ModificarSucursal extends JPanel {
 	}
 
 	public void armarPanel() {
-		lblNombre = new JLabel("NOMBRE:");
+		lblSucursalOrigen = new JLabel("SUCURSAL ORIGEN:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -50,61 +51,61 @@ public class ModificarSucursal extends JPanel {
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.weightx = 0.5;
 		gbc.insets = new Insets(10, 10, 10, 10);
-		this.add(lblNombre, gbc);
+		this.add(lblSucursalOrigen, gbc);
 
-		txtNombre = new JTextField();
+		cbSucursalOrigen = new JComboBox<>();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtNombre, gbc);
+		this.add(cbSucursalOrigen, gbc);
 
-		lblHorarioApertura = new JLabel("HORARIO DE APERTURA:");
+		lblSucursalDestino = new JLabel("SUCURSAL DESTINO:");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.NONE;
-		this.add(lblHorarioApertura, gbc);
+		this.add(lblSucursalDestino, gbc);
 
-		txtHorarioApertura = new JTextField();
+		cbSucursalDestino = new JComboBox<>();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtHorarioApertura, gbc);
+		this.add(cbSucursalDestino, gbc);
 
-		lblHorarioCierre = new JLabel("HORARIO DE CIERRE:");
+		lblCapacidad = new JLabel("CAPACIDAD:");
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.NONE;
-		this.add(lblHorarioCierre, gbc);
+		this.add(lblCapacidad, gbc);
 
-		txtHorarioCierre = new JTextField();
+		txtCapacidad = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtHorarioCierre, gbc);
+		this.add(txtCapacidad, gbc);
 
-		lblEstado = new JLabel("ESTADO DE SUCURSAL:");
+		lblDuracion = new JLabel("DURACION:");
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(lblDuracion, gbc);
+
+		txtDuracion = new JTextField();
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.add(txtDuracion, gbc);
+
+		lblEstado = new JLabel("ESTADO RUTA:");
+		gbc.gridx = 0;
+		gbc.gridy = 4;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblEstado, gbc);
 
-		cbEstado = new JComboBox<>(EstadoSucursal.values());
+		cbEstado = new JComboBox<>(EstadoRuta.values());
 		gbc.gridx = 1;
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbEstado, gbc);
-
-		lblTipoSucursal = new JLabel("TIPO DE SUCURSAL:");
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		gbc.fill = GridBagConstraints.NONE;
-		this.add(lblTipoSucursal, gbc);
-
-		cbTipo = new JComboBox<>(TipoSucursal.values());
-		gbc.gridx = 1;
-		gbc.gridy = 4;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(cbTipo, gbc);
 
 		btnModificar = new JButton("Modificar");
 		gbc.gridx = 0;
@@ -114,7 +115,7 @@ public class ModificarSucursal extends JPanel {
 		gbc.weightx = 0;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			// TODO: Agregar funcionamiento boton modificar
+			// TODO: Agregar funcionamiento boton guardar
 		});
 
 		btnCancelar = new JButton("Cancelar");
@@ -123,11 +124,11 @@ public class ModificarSucursal extends JPanel {
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-			String mensaje = "¿Deseas cancelar la modificación de sucursal?";
+			String mensaje = "¿Deseas cancelar la modificación de la ruta?";
 			int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null, new Object[] { "SI", "NO" }, "SI");
 			if (confirmado == 0) {
-				ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
+				ventana.setTitle("TP DIEDE 2023 - Menú Ruta");
 				ventana.setContentPane(panelPadre);
 				ventana.setVisible(true);
 			}

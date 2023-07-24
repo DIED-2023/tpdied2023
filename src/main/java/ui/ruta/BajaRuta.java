@@ -1,4 +1,4 @@
-package ui.sucursal;
+package ui.ruta;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,18 +17,24 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import dominio.EstadoRuta;
+
 @SuppressWarnings("serial")
-public class BajaSucursal extends JPanel{
+public class BajaRuta extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
-	private JLabel lblNombre;
-	private JTextField txtNombre;
 	private JTable tabla;
 	private JButton btnEliminar;
+	private JLabel lblSucursalOrigen;
+	private JTextField txtSucursalOrigen;
+	private JLabel lblSucursalDestino;
+	private JTextField txtSucursalDestino;
+	private JLabel lblEstado;
+	private JComboBox<EstadoRuta> cbEstado;
 	private JButton btnCancelar;
 	
-	public BajaSucursal(JFrame ventana, JPanel panelPadre) {
+	public BajaRuta(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -36,20 +43,46 @@ public class BajaSucursal extends JPanel{
 	}
 	
 	public void armarPanel() {
-		lblNombre = new JLabel("NOMBRE:");
+		
+		lblSucursalOrigen = new JLabel("SUCURSAL ORIGEN:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.weightx = 0.5;
 		gbc.insets = new Insets(10, 10, 10, 10);
-		this.add(lblNombre, gbc);
-		
-		txtNombre = new JTextField();
+		this.add(lblSucursalOrigen, gbc);
+
+		txtSucursalOrigen = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtNombre,gbc);
+		this.add(txtSucursalOrigen, gbc);
+
+		lblSucursalDestino = new JLabel("SUCURSAL DESTINO:");
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(lblSucursalDestino, gbc);
+
+		txtSucursalDestino = new JTextField();
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.add(txtSucursalDestino, gbc);
+		
+		lblEstado = new JLabel("ESTADO RUTA:");
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(lblEstado, gbc);
+
+		cbEstado = new JComboBox<>(EstadoRuta.values());
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.add(cbEstado, gbc);
 		
 		DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -58,7 +91,9 @@ public class BajaSucursal extends JPanel{
                 return false;
             }
         };
-        modelo.addColumn("Nombre Sucursal");
+        modelo.addColumn("Sucursal Origen");
+        modelo.addColumn("Sucursal Destino");
+        modelo.addColumn("Estado Ruta");
         for (int i = 0; i < 5; i++) {
             modelo.addRow(new Object[]{""});
         }
@@ -67,7 +102,7 @@ public class BajaSucursal extends JPanel{
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(300, 80));
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 4;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -75,7 +110,7 @@ public class BajaSucursal extends JPanel{
 		
 		btnEliminar = new JButton("Eliminar");
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 5;
 		gbc.gridwidth = 1;
 		gbc.weightx = 0;
 		gbc.weighty = 0;
@@ -89,11 +124,11 @@ public class BajaSucursal extends JPanel{
 		
 		btnCancelar = new JButton("Cancelar");
 		gbc.gridx = 1;
-		gbc.gridy = 2;
+		gbc.gridy = 5;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de sucursal?";
+				String mensaje = "¿Deseas cancelar la baja de ruta?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -104,7 +139,7 @@ public class BajaSucursal extends JPanel{
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
+					ventana.setTitle("TP DIEDE 2023 - Menú Ruta");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}
