@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import ui.sucursal.AltaSucursal;
 import ui.sucursal.BajaSucursal;
+import ui.sucursal.ConsultaSucursal;
 import ui.sucursal.ModificarSucursal;
 
 @SuppressWarnings("serial")
@@ -72,7 +73,9 @@ public class MenuSucursal extends JPanel {
 		gbc.gridy = 1;
 		this.add(btnConsulta, gbc);
 		btnConsulta.addActionListener(e -> {
-			// TODO: Hacer ventana de consulta
+			ventana.setTitle("TP DIED 2023 - Consulta Sucursal");
+			ventana.setContentPane(new ConsultaSucursal(ventana,this));
+			ventana.setVisible(true);
 		});
 		
 		btnAtras = new JButton("Atras");

@@ -133,7 +133,7 @@ public class ModificarOrdenProvision extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnAgregar, gbc);
 		btnAgregar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton agregar
 		});
 		
 		
@@ -167,7 +167,7 @@ public class ModificarOrdenProvision extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton eliminar
 		});
 		
 		btnModificar = new JButton("Modificar");
@@ -178,7 +178,7 @@ public class ModificarOrdenProvision extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton modificar
 		});
 	
 		btnCancelar = new JButton("Cancelar");

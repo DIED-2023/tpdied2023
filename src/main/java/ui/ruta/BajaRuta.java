@@ -24,14 +24,15 @@ public class BajaRuta extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
-	private JTable tabla;
-	private JButton btnEliminar;
 	private JLabel lblSucursalOrigen;
 	private JTextField txtSucursalOrigen;
 	private JLabel lblSucursalDestino;
 	private JTextField txtSucursalDestino;
 	private JLabel lblEstado;
 	private JComboBox<EstadoRuta> cbEstado;
+	private JButton btnBuscar;
+	private JTable tabla;
+	private JButton btnEliminar;
 	private JButton btnCancelar;
 	
 	public BajaRuta(JFrame ventana, JPanel panelPadre) {
@@ -84,6 +85,17 @@ public class BajaRuta extends JPanel{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbEstado, gbc);
 		
+		btnBuscar = new JButton("Buscar");
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.weightx = 0;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(btnBuscar, gbc);
+		btnBuscar.addActionListener(e -> {
+			//TODO: Agregar funcionamiento boton buscar
+		});
+		
 		DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -119,7 +131,7 @@ public class BajaRuta extends JPanel{
 		gbc.weightx = 0;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton aceptar
+			//TODO: Agregar funcionamiento boton eliminar
 		});
 		
 		btnCancelar = new JButton("Cancelar");

@@ -1,6 +1,5 @@
 package ui.sucursal;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -41,31 +40,32 @@ public class ConsultaSucursal extends JPanel{
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.weightx = 0.3;
+		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblNombre, gbc);
 		
 		txtNombre = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
+		gbc.weightx = 0.5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtNombre,gbc);
 		
 		btnBuscar = new JButton("Buscar");
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
+		gbc.weightx = 0.1;
 		this.add(btnBuscar, gbc);
 		btnBuscar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton buscar
 		});
 		
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 1;
-		gbc.gridy = 2;
+		gbc.gridx = 3;
+		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
@@ -94,16 +94,19 @@ public class ConsultaSucursal extends JPanel{
             }
         };
         modelo.addColumn("Nombre Sucursal");
-        for (int i = 0; i < 5; i++) {
+        modelo.addColumn("Horario Apertura");
+        modelo.addColumn("Horario Cierre");
+        modelo.addColumn("Estado");
+        for (int i = 0; i < 25; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(300, 80));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 4;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(new JScrollPane(tabla), gbc);

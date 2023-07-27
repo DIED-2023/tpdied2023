@@ -23,6 +23,7 @@ public class BajaSucursal extends JPanel{
 	private GridBagConstraints gbc;
 	private JLabel lblNombre;
 	private JTextField txtNombre;
+	private JButton btnBuscar;
 	private JTable tabla;
 	private JButton btnEliminar;
 	private JButton btnCancelar;
@@ -51,6 +52,16 @@ public class BajaSucursal extends JPanel{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtNombre,gbc);
 		
+		btnBuscar = new JButton("Buscar");
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(btnBuscar, gbc);
+		btnBuscar.addActionListener(e -> {
+			// TODO: Agregar funcionamiento boton buscar
+		});
+		
 		DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -67,7 +78,7 @@ public class BajaSucursal extends JPanel{
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(300, 80));
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -75,7 +86,7 @@ public class BajaSucursal extends JPanel{
 		
 		btnEliminar = new JButton("Eliminar");
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 		gbc.gridwidth = 1;
 		gbc.weightx = 0;
 		gbc.weighty = 0;
@@ -84,12 +95,12 @@ public class BajaSucursal extends JPanel{
 		gbc.weightx = 0;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton aceptar
+			//TODO: Agregar funcionamiento boton eliminar
 		});
 		
 		btnCancelar = new JButton("Cancelar");
 		gbc.gridx = 1;
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {

@@ -12,6 +12,7 @@ public class Sucursal {
 	private EstadoSucursal estado;
 	private TipoSucursal tipo;
 	private List<StockProducto> stock = new ArrayList<StockProducto>();
+	
 	public Sucursal(Integer id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, EstadoSucursal estado,
 			TipoSucursal tipo, List<StockProducto> stock) {
 		super();
@@ -23,6 +24,7 @@ public class Sucursal {
 		this.tipo = tipo;
 		this.stock = stock;
 	}
+	
 	public Integer getId() {
 		return id;
 	}

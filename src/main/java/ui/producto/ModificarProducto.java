@@ -98,7 +98,7 @@ public class ModificarProducto extends JPanel {
 		gbc.weightx = 0;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton modificar
 		});
 		
 		btnCancelar = new JButton("Cancelar");

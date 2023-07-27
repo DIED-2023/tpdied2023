@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import ui.stock.AltaStock;
 import ui.stock.BajaStock;
+import ui.stock.ConsultaStock;
 import ui.stock.ModificarStock;
 
 @SuppressWarnings("serial")
@@ -72,7 +73,9 @@ public class MenuStock extends JPanel {
 		gbc.gridy = 1;
 		this.add(btnConsulta, gbc);
 		btnConsulta.addActionListener(e -> {
-			// TODO: Hacer ventana de consulta
+			ventana.setTitle("TP DIED 2023 - Consulta Stock");
+			ventana.setContentPane(new ConsultaStock(ventana,this));
+			ventana.setVisible(true);
 		});
 		
 		btnAtras = new JButton("Atras");

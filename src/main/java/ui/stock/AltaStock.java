@@ -33,7 +33,7 @@ public class AltaStock extends JPanel {
 	private JButton btnAgregar;
 	private JTable tabla;
 	private JButton btnEliminar;
-	private JButton btnModificar;
+	private JButton btnGuardar;
 	private JButton btnCancelar;
 	
 	public AltaStock(JFrame ventana, JPanel panelPadre) {
@@ -136,14 +136,14 @@ public class AltaStock extends JPanel {
 			//TODO: Agregar funcionamiento boton guardar
 		});
 		
-		btnModificar = new JButton("Modificar");
+		btnGuardar = new JButton("Guardar");
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
-		this.add(btnModificar, gbc);
-		btnModificar.addActionListener(e -> {
+		this.add(btnGuardar, gbc);
+		btnGuardar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton guardar
 		});
 	

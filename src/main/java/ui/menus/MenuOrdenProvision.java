@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import ui.ordenprovision.AltaOrdenProvision;
 import ui.ordenprovision.BajaOrdenProvision;
+import ui.ordenprovision.ConsultaOrdenProvision;
 import ui.ordenprovision.ModificarOrdenProvision;
 
 @SuppressWarnings("serial")
@@ -72,7 +73,9 @@ public class MenuOrdenProvision extends JPanel {
 		gbc.gridy = 1;
 		this.add(btnConsulta, gbc);
 		btnConsulta.addActionListener(e -> {
-			// TODO: Hacer ventana de consulta
+			ventana.setTitle("TP DIED 2023 - Consulta Orden Provision");
+			ventana.setContentPane(new ConsultaOrdenProvision(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnAtras = new JButton("Atras");

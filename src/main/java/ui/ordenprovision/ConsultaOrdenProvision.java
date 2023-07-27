@@ -1,6 +1,5 @@
-package ui.producto;
+package ui.ordenprovision;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,18 +16,18 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class BajaProducto extends JPanel{
+public class ConsultaOrdenProvision extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
-	private JLabel lblNombre;
-	private JTextField txtNombre;
+	private JLabel lblNombreSucursal;
+	private JTextField txtNombreSucursal;
 	private JButton btnBuscar;
-	private JTable tabla;
-	private JButton btnEliminar;
 	private JButton btnCancelar;
+	private JTable tabla;
+	private JButton btnAsignarRecorrido;
 	
-	public BajaProducto(JFrame ventana, JPanel panelPadre) {
+	public ConsultaOrdenProvision(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -37,74 +36,41 @@ public class BajaProducto extends JPanel{
 	}
 	
 	public void armarPanel() {
-		lblNombre = new JLabel("NOMBRE:");
+		lblNombreSucursal = new JLabel("SUCURSAL DESTINO:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.weightx = 0.3;
+		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(10, 10, 10, 10);
-		this.add(lblNombre, gbc);
+		this.add(lblNombreSucursal, gbc);
 		
-		txtNombre = new JTextField();
+		txtNombreSucursal = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
+		gbc.weightx = 0.5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtNombre,gbc);
+		this.add(txtNombreSucursal,gbc);
 		
 		btnBuscar = new JButton("Buscar");
-		gbc.gridx = 1;
-		gbc.gridy = 1;
+		gbc.gridx = 2;
+		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
+		gbc.weightx = 0.1;
 		this.add(btnBuscar, gbc);
 		btnBuscar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton buscar
 		});
 		
-		DefaultTableModel modelo = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Para que las celdas no sean editables
-                return false;
-            }
-        };
-        modelo.addColumn("Nombre Producto");
-        for (int i = 0; i < 5; i++) {
-            modelo.addRow(new Object[]{""});
-        }
-		
-		tabla = new JTable(modelo);
-		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(300, 80));
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(new JScrollPane(tabla), gbc);
-		
-		btnEliminar = new JButton("Eliminar");
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		gbc.anchor = GridBagConstraints.EAST;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
-		this.add(btnEliminar, gbc);
-		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton eliminar
-		});
-		
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 1;
-		gbc.gridy = 3;
+		gbc.gridx = 3;
+		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de producto?";
+				String mensaje = "¿Deseas cancelar la consulta de orden de provisión?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -115,10 +81,45 @@ public class BajaProducto extends JPanel{
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Producto");
+					ventana.setTitle("TP DIEDE 2023 - Menú Orden Provisión");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}
+		});
+		
+		DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Para que las celdas no sean editables
+                return false;
+            }
+        };
+        modelo.addColumn("Sucursal Destino");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Tiempo");
+        for (int i = 0; i < 25; i++) {
+            modelo.addRow(new Object[]{""});
+        }
+		
+		tabla = new JTable(modelo);
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 4;
+		gbc.weightx = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.CENTER;
+		this.add(new JScrollPane(tabla), gbc);
+		
+		btnAsignarRecorrido = new JButton("Asignar Recorrido");
+		gbc.gridx = 3;
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(btnAsignarRecorrido, gbc);
+		btnAsignarRecorrido.addActionListener(e -> {
+			//TODO: Agregar funcionamiento boton asignar recorrido
 		});
 	}
 }
