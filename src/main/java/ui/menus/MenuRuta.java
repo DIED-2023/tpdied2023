@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import ui.ruta.AltaRuta;
 import ui.ruta.BajaRuta;
+import ui.ruta.ConsultaRuta;
 import ui.ruta.ModificarRuta;
 
 
@@ -73,7 +74,9 @@ public class MenuRuta extends JPanel{
 		gbc.gridy = 1;
 		this.add(btnConsulta, gbc);
 		btnConsulta.addActionListener(e -> {
-			// TODO: Hacer ventana de consulta
+			ventana.setTitle("TP DIED 2023 - Consulta Ruta");
+			ventana.setContentPane(new ConsultaRuta(ventana, this));
+			ventana.setVisible(true);
 		});
 		
 		btnAtras = new JButton("Atras");

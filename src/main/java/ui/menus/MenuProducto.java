@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import ui.producto.AltaProducto;
 import ui.producto.BajaProducto;
+import ui.producto.ConsultaProducto;
 import ui.producto.ModificarProducto;
 
 @SuppressWarnings("serial")
@@ -72,7 +73,9 @@ public class MenuProducto extends JPanel {
 		gbc.gridy = 1;
 		this.add(btnConsulta, gbc);
 		btnConsulta.addActionListener(e -> {
-			// TODO: Hacer ventana de consulta
+			ventana.setTitle("TP DIED 2023 - Consultar Producto");
+			ventana.setContentPane(new ConsultaProducto(ventana,this));
+			ventana.setVisible(true);
 		});
 		
 		btnAtras = new JButton("Atras");
