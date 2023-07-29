@@ -70,17 +70,16 @@ public class BajaSucursal extends JPanel{
             }
         };
         modelo.addColumn("Nombre Sucursal");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(300, 80));
+		tabla.setPreferredScrollableViewportSize(new Dimension(350, 100));
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(new JScrollPane(tabla), gbc);
 		
@@ -88,11 +87,8 @@ public class BajaSucursal extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton eliminar

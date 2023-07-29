@@ -5,17 +5,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-
-import dto.SucursalComboBoxDTO;
 
 @SuppressWarnings("serial")
 public class ConsultaStock extends JPanel {
@@ -23,7 +21,7 @@ public class ConsultaStock extends JPanel {
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
 	private JLabel lblSucursal;
-	private JComboBox<SucursalComboBoxDTO> cbSucursal;
+	private JTextField txtSucursal;
 	private JButton btnBuscar;
 	private JButton btnCancelar;
 	private JTable tabla;
@@ -47,12 +45,12 @@ public class ConsultaStock extends JPanel {
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursal, gbc);
 		
-		cbSucursal = new JComboBox<>();
+		txtSucursal = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weightx = 0.5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(cbSucursal,gbc);
+		this.add(txtSucursal,gbc);
 		
 		btnBuscar = new JButton("Buscar");
 		gbc.gridx = 2;

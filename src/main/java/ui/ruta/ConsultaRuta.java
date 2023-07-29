@@ -5,17 +5,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-
-import dto.SucursalComboBoxDTO;
 
 @SuppressWarnings("serial")
 public class ConsultaRuta extends JPanel {
@@ -23,9 +21,9 @@ public class ConsultaRuta extends JPanel {
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
 	private JLabel lblSucursalOrigen;
-	private JComboBox<SucursalComboBoxDTO> cbSucursalOrigen;
+	private JTextField txtSucursalOrigen;
 	private JLabel lblSucursalDestino;
-	private JComboBox<SucursalComboBoxDTO> cbSucursalDestino;
+	private JTextField txtSucursalDestino;
 	private JButton btnBuscar;
 	private JButton btnCancelar;
 	private JTable tabla;
@@ -49,12 +47,12 @@ public class ConsultaRuta extends JPanel {
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursalOrigen, gbc);
 
-		cbSucursalOrigen = new JComboBox<>();
+		txtSucursalOrigen = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weightx = 0.5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(cbSucursalOrigen, gbc);
+		this.add(txtSucursalOrigen, gbc);
 		
 		lblSucursalDestino = new JLabel("SUCURSAL DESTINO:");
 		gbc.gridx = 0;
@@ -65,12 +63,12 @@ public class ConsultaRuta extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblSucursalDestino, gbc);
 
-		cbSucursalDestino = new JComboBox<>();
+		txtSucursalDestino = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.weightx = 0.5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(cbSucursalDestino, gbc);
+		this.add(txtSucursalDestino, gbc);
 
 		btnBuscar = new JButton("Buscar");
 		gbc.gridx = 2;
@@ -93,7 +91,7 @@ public class ConsultaRuta extends JPanel {
 			int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null, new Object[] { "SI", "NO" }, "SI");
 			if (confirmado == 0) {
-				ventana.setTitle("TP DIEDE 2023 - Menú Stock");
+				ventana.setTitle("TP DIEDE 2023 - Menú Ruta");
 				ventana.setContentPane(panelPadre);
 				ventana.setVisible(true);
 			}
@@ -111,7 +109,7 @@ public class ConsultaRuta extends JPanel {
 		modelo.addColumn("Capacidad");
 		modelo.addColumn("Duracion");
 		modelo.addColumn("Estado");
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; i < 100; i++) {
 			modelo.addRow(new Object[] { "" });
 		}
 

@@ -97,7 +97,7 @@ public class ConsultaSucursal extends JPanel{
         modelo.addColumn("Horario Apertura");
         modelo.addColumn("Horario Cierre");
         modelo.addColumn("Estado");
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 100; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
@@ -106,7 +106,6 @@ public class ConsultaSucursal extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 4;
-		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(new JScrollPane(tabla), gbc);

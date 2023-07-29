@@ -51,7 +51,7 @@ public class AltaStock extends JPanel {
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.EAST;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.weightx = 0.5;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursal, gbc);
@@ -64,7 +64,7 @@ public class AltaStock extends JPanel {
 		this.add(cbSucursal,gbc);
 	
 		lblProducto = new JLabel("PRODUCTO: ");
-		gbc.weightx = 0;
+		gbc.weightx = 0.2;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
@@ -75,8 +75,6 @@ public class AltaStock extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
-		gbc.weightx = 0.20;
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbProducto,gbc);
 		
@@ -99,7 +97,7 @@ public class AltaStock extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnAgregar, gbc);
 		btnAgregar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton agregar producto
 		});
 		
 		
@@ -129,11 +127,10 @@ public class AltaStock extends JPanel {
 		btnEliminar = new JButton("Eliminar Producto");
 		gbc.gridx = 4;
 		gbc.gridy = 2;
-		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton eliminar producto
 		});
 		
 		btnGuardar = new JButton("Guardar");

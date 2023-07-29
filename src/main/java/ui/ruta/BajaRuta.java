@@ -106,17 +106,16 @@ public class BajaRuta extends JPanel{
         modelo.addColumn("Sucursal Origen");
         modelo.addColumn("Sucursal Destino");
         modelo.addColumn("Estado Ruta");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(300, 80));
+		tabla.setPreferredScrollableViewportSize(new Dimension(350, 100));
 		gbc.gridx = 0;
 		gbc.gridy = 4;
 		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(new JScrollPane(tabla), gbc);
 		

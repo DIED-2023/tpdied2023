@@ -54,8 +54,7 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.EAST;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.weightx = 0.5;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursal, gbc);
@@ -71,7 +70,6 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblFecha, gbc);
@@ -102,6 +100,7 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
+		gbc.weightx = 0.2;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblProducto,gbc);
 		
@@ -109,8 +108,6 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
-		gbc.weightx = 0.20;
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbProducto,gbc);
 		
@@ -129,13 +126,11 @@ public class AltaOrdenProvision extends JPanel {
 		btnAgregar = new JButton("Agregar Producto");
 		gbc.gridx = 4;
 		gbc.gridy = 3;
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnAgregar, gbc);
 		btnAgregar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton guardar
 		});
-		
 		
 		DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -146,7 +141,7 @@ public class AltaOrdenProvision extends JPanel {
         };
         modelo.addColumn("Producto");
         modelo.addColumn("Cantidad");
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 100; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
@@ -163,7 +158,6 @@ public class AltaOrdenProvision extends JPanel {
 		btnEliminar = new JButton("Eliminar Producto");
 		gbc.gridx = 4;
 		gbc.gridy = 4;
-		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {

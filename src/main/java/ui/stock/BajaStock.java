@@ -1,5 +1,6 @@
 package ui.stock;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -44,7 +45,7 @@ public class BajaStock extends JPanel{
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0.5;
-		gbc.anchor = GridBagConstraints.EAST;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursal, gbc);
 		
@@ -80,10 +81,10 @@ public class BajaStock extends JPanel{
 		
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tabla.setPreferredScrollableViewportSize(new Dimension(400, 100));
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(new JScrollPane(tabla), gbc);
 		
