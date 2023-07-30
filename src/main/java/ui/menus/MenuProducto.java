@@ -1,5 +1,6 @@
 package ui.menus;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,9 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ui.producto.AltaProducto;
-import ui.producto.BajaProducto;
-import ui.producto.ConsultaProducto;
-import ui.producto.ModificarProducto;
+import ui.producto.GestionProducto;
 
 @SuppressWarnings("serial")
 public class MenuProducto extends JPanel {
@@ -19,9 +18,7 @@ public class MenuProducto extends JPanel {
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
 	private JButton btnAlta;
-	private JButton btnBaja;
-	private JButton btnModificar;
-	private JButton btnConsulta;
+	private JButton btnGestion;
 	private JButton btnAtras;
 	
 	public MenuProducto(JFrame ventana, JPanel panelPadre) {
@@ -34,10 +31,9 @@ public class MenuProducto extends JPanel {
 	
 	public void armarPanel() {
 		btnAlta = new JButton("Alta");
+		btnAlta.setPreferredSize(new Dimension(200,25));
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(10, 10, 10, 10);
@@ -48,40 +44,22 @@ public class MenuProducto extends JPanel {
 			ventana.setVisible(true);
 		});
 		
-		btnBaja = new JButton("Baja");
+		btnGestion = new JButton("Gestion");
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		this.add(btnBaja, gbc);
-		btnBaja.addActionListener(e -> {
-			ventana.setTitle("TP DIED 2023 - Baja Producto");
-			ventana.setContentPane(new BajaProducto(ventana,this));
-			ventana.setVisible(true);
-		});
-		
-		btnModificar = new JButton("Modificar");
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		this.add(btnModificar, gbc);
-		btnModificar.addActionListener(e -> {
-			ventana.setTitle("TP DIED 2023 - Modificar Producto");
-			ventana.setContentPane(new ModificarProducto(ventana,this));
-			ventana.setVisible(true);
-		});
-		
-		btnConsulta = new JButton("Consulta");
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		this.add(btnConsulta, gbc);
-		btnConsulta.addActionListener(e -> {
-			ventana.setTitle("TP DIED 2023 - Consultar Producto");
-			ventana.setContentPane(new ConsultaProducto(ventana,this));
+		btnGestion.setPreferredSize(new Dimension(200,25));
+		this.add(btnGestion, gbc);
+		btnGestion.addActionListener(e -> {
+			ventana.setTitle("TP DIED 2023 - Gestión Producto");
+			ventana.setContentPane(new GestionProducto(ventana,this));
 			ventana.setVisible(true);
 		});
 		
 		btnAtras = new JButton("Atras");
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 1;
 		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnAtras, gbc);
 		btnAtras.addActionListener(e -> {
 			ventana.setTitle("TP DIED 2023 - Menú Principal");

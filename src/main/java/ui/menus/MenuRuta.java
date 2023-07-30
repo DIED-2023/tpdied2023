@@ -1,5 +1,6 @@
 package ui.menus;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,10 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ui.ruta.AltaRuta;
-import ui.ruta.BajaRuta;
-import ui.ruta.ConsultaRuta;
-import ui.ruta.ModificarRuta;
-
+import ui.ruta.GestionRuta;
 
 @SuppressWarnings("serial")
 public class MenuRuta extends JPanel{
@@ -20,9 +18,7 @@ public class MenuRuta extends JPanel{
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
 	private JButton btnAlta;
-	private JButton btnBaja;
-	private JButton btnModificar;
-	private JButton btnConsulta;
+	private JButton btnGestion;
 	private JButton btnAtras;
 	
 	public MenuRuta(JFrame ventana, JPanel panelPadre) {
@@ -35,10 +31,9 @@ public class MenuRuta extends JPanel{
 	
 	public void armarPanel() {
 		btnAlta = new JButton("Alta");
+		btnAlta.setPreferredSize(new Dimension(200,25));
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(10, 10, 10, 10);
@@ -49,33 +44,14 @@ public class MenuRuta extends JPanel{
 			ventana.setVisible(true);
 		});
 		
-		btnBaja = new JButton("Baja");
+		btnGestion = new JButton("Gestion");
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		this.add(btnBaja, gbc);
-		btnBaja.addActionListener(e -> {
-			ventana.setTitle("TP DIED 2023 - Baja Ruta");
-			ventana.setContentPane(new BajaRuta(ventana, this));
-			ventana.setVisible(true);
-		});
-		
-		btnModificar = new JButton("Modificar");
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		this.add(btnModificar, gbc);
-		btnModificar.addActionListener(e -> {
-			ventana.setTitle("TP DIED 2023 - Modificar Ruta");
-			ventana.setContentPane(new ModificarRuta(ventana, this));
-			ventana.setVisible(true);
-		});
-		
-		btnConsulta = new JButton("Consulta");
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		this.add(btnConsulta, gbc);
-		btnConsulta.addActionListener(e -> {
-			ventana.setTitle("TP DIED 2023 - Consulta Ruta");
-			ventana.setContentPane(new ConsultaRuta(ventana, this));
+		btnGestion.setPreferredSize(new Dimension(200,25));
+		this.add(btnGestion, gbc);
+		btnGestion.addActionListener(e -> {
+			ventana.setTitle("TP DIED 2023 - Gestion Ruta");
+			ventana.setContentPane(new GestionRuta(ventana, this));
 			ventana.setVisible(true);
 		});
 		
@@ -83,6 +59,7 @@ public class MenuRuta extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnAtras, gbc);
 		btnAtras.addActionListener(e -> {
 			ventana.setTitle("TP DIED 2023 - Menú Principal");

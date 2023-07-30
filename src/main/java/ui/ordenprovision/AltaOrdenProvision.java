@@ -3,6 +3,7 @@ package ui.ordenprovision;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import com.toedter.calendar.JDateChooser;
+
 import dto.ProductoComboBoxDTO;
 import dto.SucursalComboBoxDTO;
 
@@ -27,7 +30,7 @@ public class AltaOrdenProvision extends JPanel {
 	private JLabel lblSucursal;
 	private JComboBox<SucursalComboBoxDTO> cbSucursal;
 	private JLabel lblFecha;
-	private JTextField txtFecha;
+	private JDateChooser fecha;
 	private JLabel lblTiempo;
 	private JTextField txtTiempo;
 	private JLabel lblProducto;
@@ -49,13 +52,10 @@ public class AltaOrdenProvision extends JPanel {
 	}
 	
 	public void armarPanel() {
-		
 		lblSucursal = new JLabel("SUCURSAL:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.weightx = 0.5;
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursal, gbc);
 		
@@ -63,6 +63,7 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridwidth = 4;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbSucursal,gbc);
 		
@@ -70,21 +71,26 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblFecha, gbc);
 		
-		txtFecha = new JTextField();
+		fecha = new JDateChooser("dd/MM/yyyy","##/##/####",'-');
+		fecha.getJCalendar().setMinSelectableDate(new Date());
+		//Falta que cuando ingresa una fecha menor a la de hoy no lo permita
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.gridwidth = 4;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtFecha,gbc);
+		this.add(fecha,gbc);
 		
 		lblTiempo = new JLabel("TIEMPO:");
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblTiempo,gbc);
 		
@@ -92,6 +98,7 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.gridwidth = 4;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtTiempo,gbc);
 		
@@ -100,36 +107,40 @@ public class AltaOrdenProvision extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
-		gbc.weightx = 0.2;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblProducto,gbc);
 		
 		cbProducto = new JComboBox<>();
 		gbc.gridx = 1;
 		gbc.gridy = 3;
-		gbc.gridwidth = 1;
+		gbc.weightx = 0.5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbProducto,gbc);
 		
 		lblCantidad = new JLabel("CANTIDAD: ");
 		gbc.gridx = 2;
 		gbc.gridy = 3;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblCantidad,gbc);
 		
 		txtCantidad = new JTextField();
 		gbc.gridx = 3;
 		gbc.gridy = 3;
+		gbc.weightx = 0.5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtCantidad,gbc);
 		
 		btnAgregar = new JButton("Agregar Producto");
 		gbc.gridx = 4;
 		gbc.gridy = 3;
+		gbc.weightx = 0;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnAgregar, gbc);
 		btnAgregar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton agregar producto
 		});
 		
 		DefaultTableModel modelo = new DefaultTableModel() {
@@ -158,16 +169,17 @@ public class AltaOrdenProvision extends JPanel {
 		btnEliminar = new JButton("Eliminar Producto");
 		gbc.gridx = 4;
 		gbc.gridy = 4;
+		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			//TODO: Agregar funcionamiento boton eliminar producto
 		});
 		
 		btnGuardar = new JButton("Guardar");
-		gbc.gridx = 0;
+		gbc.gridx = 3;
 		gbc.gridy = 5;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnGuardar, gbc);
@@ -176,9 +188,8 @@ public class AltaOrdenProvision extends JPanel {
 		});
 	
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 2;
+		gbc.gridx = 4;
 		gbc.gridy = 5;
-		gbc.gridwidth = 3;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {

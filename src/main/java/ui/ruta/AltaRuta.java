@@ -1,6 +1,5 @@
 package ui.ruta;
 
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -46,81 +45,97 @@ public class AltaRuta extends JPanel {
 		lblSucursalOrigen = new JLabel("SUCURSAL ORIGEN:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.weightx = 0.5;
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursalOrigen, gbc);
 
 		cbSucursalOrigen = new JComboBox<>();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbSucursalOrigen, gbc);
 
 		lblSucursalDestino = new JLabel("SUCURSAL DESTINO:");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblSucursalDestino, gbc);
 
 		cbSucursalDestino = new JComboBox<>();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbSucursalDestino, gbc);
 
 		lblCapacidad = new JLabel("CAPACIDAD:");
 		gbc.gridx = 0;
 		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblCapacidad, gbc);
 
 		txtCapacidad = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 2;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtCapacidad, gbc);
 
 		lblDuracion = new JLabel("DURACION:");
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblDuracion, gbc);
 
 		txtDuracion = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 3;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtDuracion, gbc);
 
 		lblEstado = new JLabel("ESTADO RUTA");
 		gbc.gridx = 0;
 		gbc.gridy = 4;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblEstado, gbc);
 
 		cbEstado = new JComboBox<>(EstadoRuta.values());
 		gbc.gridx = 1;
 		gbc.gridy = 4;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbEstado, gbc);
 
 		btnGuardar = new JButton("Guardar");
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 5;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
 		this.add(btnGuardar, gbc);
 		btnGuardar.addActionListener(e -> {
 			// TODO: Agregar funcionamiento boton guardar
 		});
 
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 1;
+		gbc.gridx = 2;
 		gbc.gridy = 5;
+		gbc.weightx = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {

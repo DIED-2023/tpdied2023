@@ -45,61 +45,61 @@ public class ModificarStock extends JPanel {
 	}
 	
 	public void armarPanel() {
-		
 		lblSucursal = new JLabel("SUCURSAL:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.weightx = 0.5;
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblSucursal, gbc);
 		
 		cbSucursal = new JComboBox<>();
+		cbSucursal.setEnabled(false);
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridwidth = 4;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbSucursal,gbc);
 	
-		lblProducto = new JLabel("PRODUCTO: ");
-		gbc.weightx = 0.2;
+		lblProducto = new JLabel("PRODUCTO:");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblProducto,gbc);
 		
 		cbProducto = new JComboBox<>();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.gridwidth = 1;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(cbProducto,gbc);
 		
-		lblCantidad = new JLabel("CANTIDAD: ");
+		lblCantidad = new JLabel("CANTIDAD:");
 		gbc.gridx = 2;
 		gbc.gridy = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblCantidad,gbc);
 		
 		txtCantidad = new JTextField();
 		gbc.gridx = 3;
 		gbc.gridy = 1;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtCantidad,gbc);
 		
 		btnAgregar = new JButton("Agregar Producto");
 		gbc.gridx = 4;
 		gbc.gridy = 1;
+		gbc.weightx = 0;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnAgregar, gbc);
 		btnAgregar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton agregar producto
 		});
-		
 		
 		DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -110,13 +110,12 @@ public class ModificarStock extends JPanel {
         };
         modelo.addColumn("Producto");
         modelo.addColumn("Cantidad");
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 100; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		gbc.weightx = 0;
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 4;
@@ -134,9 +133,9 @@ public class ModificarStock extends JPanel {
 		});
 		
 		btnModificar = new JButton("Modificar");
-		gbc.gridx = 0;
+		gbc.gridx = 3;
 		gbc.gridy = 3;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnModificar, gbc);
@@ -145,13 +144,13 @@ public class ModificarStock extends JPanel {
 		});
 	
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 2;
+		gbc.gridx = 4;
 		gbc.gridy = 3;
 		gbc.gridwidth = 3;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la modificacion de stock?";
+				String mensaje = "¿Deseas cancelar la modificación de stock?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -162,7 +161,7 @@ public class ModificarStock extends JPanel {
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Stock");
+					ventana.setTitle("TP DIEDE 2023 - Gestión Stock");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}

@@ -40,70 +40,81 @@ public class ModificarProducto extends JPanel {
 		lblNombre = new JLabel("NOMBRE:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.weightx = 0.5;
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		this.add(lblNombre, gbc);
 		
 		txtNombre = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtNombre,gbc);
 		
 		lblDescripcion = new JLabel("DESCRIPCION:");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblDescripcion,gbc);
 		
 		txtDescripcion = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtDescripcion,gbc);
 		
 		lblPrecioUnitario = new JLabel("PRECIO UNITARIO:");
 		gbc.gridx = 0;
 		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblPrecioUnitario, gbc);
 		
 		txtPrecioUnitario = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 2;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtPrecioUnitario, gbc);
 		
 		lblPesoKg = new JLabel("PESO (KG):");
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblPesoKg, gbc);
 		
 		txtPesoKg = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 3;
+		gbc.gridwidth = 2;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(txtPesoKg, gbc);
 		
-		
 		btnModificar = new JButton("Modificar");
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 5;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton modificar
+			//TODO: Agregar funcionamiento boton guardar
 		});
 		
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 1;
+		gbc.gridx = 2;
 		gbc.gridy = 5;
+		gbc.weightx = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
@@ -118,7 +129,7 @@ public class ModificarProducto extends JPanel {
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Producto");
+					ventana.setTitle("TP DIEDE 2023 - Gestión Producto");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}

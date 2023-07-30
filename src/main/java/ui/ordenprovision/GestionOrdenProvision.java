@@ -1,36 +1,35 @@
-package ui.stock;
+package ui.ordenprovision;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import dto.SucursalComboBoxDTO;
-
 @SuppressWarnings("serial")
-public class BajaStock extends JPanel{
+public class GestionOrdenProvision extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
-	private JLabel lblSucursal;
-	private JComboBox<SucursalComboBoxDTO> cbSucursal;
+	private JLabel lblNombreSucursal;
+	private JTextField txtNombreSucursal;
 	private JButton btnBuscar;
 	private JTable tabla;
+	private JButton btnAsignarRecorrido;
+	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JButton btnCancelar;
 	
-	public BajaStock(JFrame ventana, JPanel panelPadre) {
+	public GestionOrdenProvision(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -39,27 +38,25 @@ public class BajaStock extends JPanel{
 	}
 	
 	public void armarPanel() {
-		lblSucursal = new JLabel("SUCURSAL:");
+		lblNombreSucursal = new JLabel("SUCURSAL DESTINO:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		gbc.weightx = 0.5;
-		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 10, 10, 10);
-		this.add(lblSucursal, gbc);
+		this.add(lblNombreSucursal, gbc);
 		
-		cbSucursal = new JComboBox<>();
+		txtNombreSucursal = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(cbSucursal,gbc);
+		this.add(txtNombreSucursal,gbc);
 		
 		btnBuscar = new JButton("Buscar");
-		gbc.gridx = 1;
-		gbc.gridy = 1;
+		gbc.gridx = 2;
+		gbc.gridy = 0;
 		gbc.weightx = 0;
-		gbc.anchor = GridBagConstraints.EAST;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnBuscar, gbc);
 		btnBuscar.addActionListener(e -> {
@@ -73,39 +70,58 @@ public class BajaStock extends JPanel{
                 return false;
             }
         };
-        modelo.addColumn("Producto");
-        modelo.addColumn("Cantidad");
-        for (int i = 0; i < 25; i++) {
+        modelo.addColumn("Sucursal Destino");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Tiempo");
+        for (int i = 0; i < 100; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(400, 100));
 		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.gridy = 1;
+		gbc.gridwidth = 6;
+		gbc.weightx = 0;
+		gbc.fill = GridBagConstraints.BOTH;
 		this.add(new JScrollPane(tabla), gbc);
 		
-		btnEliminar = new JButton("Eliminar");
-		gbc.gridx = 0;
-		gbc.gridy = 3;
+		btnAsignarRecorrido = new JButton("Asignar Recorrido");
+		gbc.gridx = 2;
+		gbc.gridy = 2;
 		gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
+		this.add(btnAsignarRecorrido, gbc);
+		btnAsignarRecorrido.addActionListener(e -> {
+			//TODO: Agregar funcionamiento boton asignar recorrido
+		});
+		
+		btnModificar = new JButton("Modificar");
+		gbc.gridx = 3;
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(btnModificar, gbc);
+		btnModificar.addActionListener(e -> {
+			//TODO: Agregar funcionamiento boton modificar
+			//Tiene que llevarlo a la ventana ModificarOrdenProvision despues de haber
+			//seleccionado una fila 
+		});
+		
+		btnEliminar = new JButton("Eliminar");
+		gbc.gridx = 4;
+		gbc.gridy = 2;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton eliminar
 		});
 		
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 1;
-		gbc.gridy = 3;
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 5;
+		gbc.gridy = 2;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de stock?";
+				String mensaje = "¿Deseas cancelar la gestión de orden de provisión?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -116,7 +132,7 @@ public class BajaStock extends JPanel{
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Stock");
+					ventana.setTitle("TP DIEDE 2023 - Menú Orden Provisión");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}

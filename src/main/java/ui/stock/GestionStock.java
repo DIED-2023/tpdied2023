@@ -1,12 +1,10 @@
-package ui.ruta;
+package ui.stock;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,25 +15,20 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import dominio.EstadoRuta;
-
 @SuppressWarnings("serial")
-public class BajaRuta extends JPanel{
+public class GestionStock extends JPanel {
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
-	private JLabel lblSucursalOrigen;
-	private JTextField txtSucursalOrigen;
-	private JLabel lblSucursalDestino;
-	private JTextField txtSucursalDestino;
-	private JLabel lblEstado;
-	private JComboBox<EstadoRuta> cbEstado;
+	private JLabel lblSucursal;
+	private JTextField txtSucursal;
 	private JButton btnBuscar;
 	private JTable tabla;
+	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JButton btnCancelar;
 	
-	public BajaRuta(JFrame ventana, JPanel panelPadre) {
+	public GestionStock(JFrame ventana, JPanel panelPadre) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
@@ -44,52 +37,25 @@ public class BajaRuta extends JPanel{
 	}
 	
 	public void armarPanel() {
-		
-		lblSucursalOrigen = new JLabel("SUCURSAL ORIGEN:");
+		lblSucursal = new JLabel("SUCURSAL:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.weightx = 0.5;
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 10, 10, 10);
-		this.add(lblSucursalOrigen, gbc);
-
-		txtSucursalOrigen = new JTextField();
+		this.add(lblSucursal, gbc);
+		
+		txtSucursal = new JTextField();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
+		gbc.weightx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtSucursalOrigen, gbc);
-
-		lblSucursalDestino = new JLabel("SUCURSAL DESTINO:");
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.NONE;
-		this.add(lblSucursalDestino, gbc);
-
-		txtSucursalDestino = new JTextField();
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(txtSucursalDestino, gbc);
-		
-		lblEstado = new JLabel("ESTADO RUTA:");
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.NONE;
-		this.add(lblEstado, gbc);
-
-		cbEstado = new JComboBox<>(EstadoRuta.values());
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(cbEstado, gbc);
+		this.add(txtSucursal,gbc);
 		
 		btnBuscar = new JButton("Buscar");
-		gbc.gridx = 1;
-		gbc.gridy = 3;
+		gbc.gridx = 2;
+		gbc.gridy = 0;
 		gbc.weightx = 0;
-		gbc.anchor = GridBagConstraints.EAST;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnBuscar, gbc);
 		btnBuscar.addActionListener(e -> {
@@ -103,43 +69,46 @@ public class BajaRuta extends JPanel{
                 return false;
             }
         };
-        modelo.addColumn("Sucursal Origen");
-        modelo.addColumn("Sucursal Destino");
-        modelo.addColumn("Estado Ruta");
-        for (int i = 0; i < 10; i++) {
+        modelo.addColumn("Producto");
+        modelo.addColumn("Cantidad");
+        for (int i = 0; i < 100; i++) {
             modelo.addRow(new Object[]{""});
         }
 		
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(350, 100));
 		gbc.gridx = 0;
-		gbc.gridy = 4;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.gridy = 1;
+		gbc.gridwidth = 5;
+		gbc.fill = GridBagConstraints.BOTH;
 		this.add(new JScrollPane(tabla), gbc);
 		
-		btnEliminar = new JButton("Eliminar");
-		gbc.gridx = 0;
-		gbc.gridy = 5;
+		btnModificar = new JButton("Modificar");
+		gbc.gridx = 2;
+		gbc.gridy = 2;
 		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
+		this.add(btnModificar, gbc);
+		btnModificar.addActionListener(e -> {
+			//TODO: Agregar funcionamiento boton modificar
+			//Tiene que llevarlo a la ventna ModificarSotck despues de haber
+			//seleccionado una fila 
+		});
+		
+		btnEliminar = new JButton("Eliminar");
+		gbc.gridx = 3;
+		gbc.gridy = 2;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
 			//TODO: Agregar funcionamiento boton eliminar
 		});
 		
 		btnCancelar = new JButton("Cancelar");
-		gbc.gridx = 1;
-		gbc.gridy = 5;
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 4;
+		gbc.gridy = 2;
 		this.add(btnCancelar, gbc);
 		btnCancelar.addActionListener(e -> {
-				String mensaje = "¿Deseas cancelar la baja de ruta?";
+				String mensaje = "¿Deseas cancelar la gestión de stock?";
 				int confirmado = JOptionPane.showOptionDialog(
 						this, 
 						mensaje, 
@@ -150,7 +119,7 @@ public class BajaRuta extends JPanel{
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Ruta");
+					ventana.setTitle("TP DIEDE 2023 - Menú Stock");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}
