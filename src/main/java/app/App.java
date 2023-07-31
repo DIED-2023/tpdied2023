@@ -14,5 +14,4 @@ public class App {
 		ventana.setContentPane(new MenuPrincipal(ventana));
 		ventana.setVisible(true);
 	}
-
 }

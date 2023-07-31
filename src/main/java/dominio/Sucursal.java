@@ -1,29 +1,16 @@
 package dominio;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sucursal {
 	private Integer id;
 	private String nombre;
-	private LocalTime horarioApertura;
-	private LocalTime horarioCierre;
+	private String horarioApertura;
+	private String horarioCierre;
 	private EstadoSucursal estado;
 	private TipoSucursal tipo;
 	private List<StockProducto> stock = new ArrayList<StockProducto>();
-	
-	public Sucursal(Integer id, String nombre, LocalTime horarioApertura, LocalTime horarioCierre, EstadoSucursal estado,
-			TipoSucursal tipo, List<StockProducto> stock) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.horarioApertura = horarioApertura;
-		this.horarioCierre = horarioCierre;
-		this.estado = estado;
-		this.tipo = tipo;
-		this.stock = stock;
-	}
 	
 	public Integer getId() {
 		return id;
@@ -37,16 +24,16 @@ public class Sucursal {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public LocalTime getHorarioApertura() {
+	public String getHorarioApertura() {
 		return horarioApertura;
 	}
-	public void setHorarioApertura(LocalTime horarioApertura) {
+	public void setHorarioApertura(String horarioApertura) {
 		this.horarioApertura = horarioApertura;
 	}
-	public LocalTime getHorarioCierre() {
+	public String getHorarioCierre() {
 		return horarioCierre;
 	}
-	public void setHorarioCierre(LocalTime horarioCierre) {
+	public void setHorarioCierre(String horarioCierre) {
 		this.horarioCierre = horarioCierre;
 	}
 	public EstadoSucursal getEstado() {
@@ -66,7 +53,5 @@ public class Sucursal {
 	}
 	public void setStock(List<StockProducto> stock) {
 		this.stock = stock;
-	}
-	
-	
+	}	
 }
