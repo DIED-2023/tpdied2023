@@ -1,5 +1,6 @@
 package ui.producto;
 
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,11 +12,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import dto.BusquedaProductoDTO;
+import dto.ModificarProductoDTO;
+import excepciones.ExisteSucursalException;
+import excepciones.UpdateDBException;
+import gestores.GestorProducto;
+
 @SuppressWarnings("serial")
 public class ModificarProducto extends JPanel {
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
+	private GestorProducto gestorProducto = GestorProducto.getInstancia();
+	private BusquedaProductoDTO dto;
 	private JLabel lblNombre;
 	private JTextField txtNombre;
 	private JLabel lblDescripcion;
@@ -108,7 +117,29 @@ public class ModificarProducto extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			if(!validarDatosObligatorios()) {
+				String mensaje = "Todos los campos son obligatorios";
+				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+			}else {
+				String nombre = txtNombre.getText();
+				String descripcion = txtDescripcion.getText();
+				//contarle a exe que utilice Double.parseDouble para convertir de string a double
+				Double precioUnitario = Double.parseDouble(txtPrecioUnitario.getText());
+				Double pesoKg = Double.parseDouble(txtPesoKg.getText());
+				ModificarProductoDTO modificarProductoDto = new ModificarProductoDTO(dto.getId(),nombre,dto.getNombre(), descripcion, precioUnitario, pesoKg);
+				try {
+					gestorProducto.modificarProducto(modificarProductoDto);
+					mostrarMensajeProductoModificado();
+				} catch (ExisteSucursalException e1) {
+					String mensaje = "Ya existe un producto con ese nombre";
+					int confirmado = JOptionPane.showOptionDialog(this, mensaje, "ERROR", JOptionPane.OK_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
+					if(confirmado == 0) txtNombre.requestFocus();
+				} catch (UpdateDBException e1) {
+					String mensaje = "No se ha podido modificar el producto";
+					JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		
 		btnCancelar = new JButton("Cancelar");
@@ -135,4 +166,22 @@ public class ModificarProducto extends JPanel {
 				}
 		});
 	}
+
+	private void mostrarMensajeProductoModificado() {
+		String mensaje = "El producto "+txtNombre.getText()+" ha sido modificado correctamente.";
+		int confirmado = JOptionPane.showOptionDialog(this, mensaje, "INFORMACIÓN", JOptionPane.OK_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
+		if (confirmado == 0) {
+			ventana.setTitle("TP DIED 2023 - Gestión Producto");
+			ventana.setContentPane(new GestionProducto(ventana, panelPadre));
+			ventana.setVisible(true);
+		}
+	}
+
+	private boolean validarDatosObligatorios() {
+		if(txtNombre.getText().isBlank() || txtDescripcion.getText().isBlank() 
+				|| txtPrecioUnitario.getText().isBlank()) return false;
+		return true;
+	}
+	
 }

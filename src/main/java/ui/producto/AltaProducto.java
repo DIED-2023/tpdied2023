@@ -11,12 +11,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import dto.AltaProductoDTO;
+import excepciones.ExisteProductoException;
+import excepciones.UpdateDBException;
+import gestores.GestorProducto;
+
+
 
 @SuppressWarnings("serial")
 public class AltaProducto extends JPanel {
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
+	private GestorProducto gestorProducto = GestorProducto.getInstancia();
 	private JLabel lblNombre;
 	private JTextField txtNombre;
 	private JLabel lblDescripcion;
@@ -109,7 +116,30 @@ public class AltaProducto extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnGuardar, gbc);
 		btnGuardar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			if(!validarDatosObligatorios()) {
+				String mensaje = "Todos los campos son obligatorios";
+				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+			}else {
+				String nombre = txtNombre.getText();
+				String descripcion = txtDescripcion.getText();
+				//contarle a exe que utilice Double.parseDouble para convertir de string a double
+				Double precioUnitario = Double.parseDouble(txtPrecioUnitario.getText());
+				Double pesoKg = Double.parseDouble(txtPesoKg.getText());
+				AltaProductoDTO altaProductoDto = new AltaProductoDTO(nombre, descripcion, precioUnitario,pesoKg);
+				try {
+					gestorProducto.altaProducto(altaProductoDto);
+					mostrarMensajProductoAgregado();
+				} catch (ExisteProductoException e1) {
+					String mensaje = "Ya existe el producto";
+					int confirmado = JOptionPane.showOptionDialog(this, mensaje, "ERROR", JOptionPane.OK_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
+					if(confirmado == 0) txtNombre.requestFocus();
+				
+				} catch (UpdateDBException e1) {
+					String mensaje = "No se ha podido guardar el producto";
+					JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		
 		btnCancelar = new JButton("Cancelar");
@@ -135,5 +165,26 @@ public class AltaProducto extends JPanel {
 					ventana.setVisible(true);
 				}
 		});
+	}
+
+	private void mostrarMensajProductoAgregado() {
+		String mensaje = "El producto  "+txtNombre.getText()+" ha sido agregada correctamente. ¿Desea cargar otro producto?";
+		int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, new Object[] { "SI", "NO" }, "SI");
+		if (confirmado == 0) {
+			ventana.setContentPane(new AltaProducto(ventana, panelPadre));
+			ventana.setVisible(true);
+		}else {
+			ventana.setTitle("TP DIEDE 2023 - Menú Producto");
+			ventana.setContentPane(panelPadre);
+			ventana.setVisible(true);
+		}
+	}
+	
+	
+	private boolean validarDatosObligatorios() {
+		if(txtNombre.getText().isBlank() || txtDescripcion.getText().isBlank() 
+				|| txtPrecioUnitario.getText().isBlank() || txtPesoKg.getText().isBlank()) return false;
+		return true;
 	}
 }

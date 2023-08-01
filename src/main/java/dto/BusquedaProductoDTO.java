@@ -1,22 +1,11 @@
-package dominio;
+package dto;
 
-public class Producto {
+public class BusquedaProductoDTO {
 	private Integer id;
 	private String nombre;
 	private String descripcion;
 	private Double precioUnitario;
 	private Double pesoKg;
-	public Producto(Integer id, String nombre, String descripcion, Double precioUnitario, Double pesoKg) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precioUnitario = precioUnitario;
-		this.pesoKg = pesoKg;
-	}
-	
-	public Producto() {};
-	
 	public Integer getId() {
 		return id;
 	}
@@ -47,6 +36,5 @@ public class Producto {
 	public void setPesoKg(Double pesoKg) {
 		this.pesoKg = pesoKg;
 	}
-	
 	
 }
