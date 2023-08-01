@@ -8,6 +8,8 @@ import dao.interfaces.SucursalDao;
 import dominio.Sucursal;
 import dominio.TipoSucursal;
 import dto.AltaSucursalDTO;
+import dto.BusquedaSucursalDTO;
+import dto.ModificarSucursalDTO;
 import dto.SucursalDTO;
 import excepciones.ExisteCentroException;
 import excepciones.ExistePuertoException;
@@ -49,6 +51,7 @@ public final class GestorSucursal {
 		sucursalDao.guardar(s);
 	}
 	
+	//El nombre puede ser una parte o completo o vacio
 	public List<SucursalDTO> buscarSucursalesPorNombre(String nombre) {
 		List<SucursalDTO> sucursales = new ArrayList<SucursalDTO>();
 		sucursales = sucursalDao.getSucursalesPorNombre(nombre);
@@ -57,5 +60,26 @@ public final class GestorSucursal {
 	
 	public void eliminarSucursal(String nombre) throws UpdateDBException{
 		sucursalDao.deleteSucursal(nombre);
+	}
+	
+	public BusquedaSucursalDTO getSucursal(String nombre) {
+		return sucursalDao.getSucursalByNombre(nombre);
+	}
+	
+	public void modificarSucursal(ModificarSucursalDTO dto) throws ExisteSucursalException, ExistePuertoException, ExisteCentroException, UpdateDBException {
+		boolean existeSucursal = false;
+		boolean existePuerto = false;
+		boolean existeCentro = false;
+		if(!dto.getNombreAnterior().equals(dto.getNombre())) {
+			existeSucursal = sucursalDao.existeSucursal(dto.getNombre()); 
+		}
+		if(existeSucursal) throw new ExisteSucursalException();
+		if(!dto.getTipoSucursalAnterior().equals(dto.getTipoSucursal())) {
+			existePuerto = sucursalDao.existePuerto();
+			existeCentro = sucursalDao.existeCentro();
+		}
+		if(existePuerto && TipoSucursal.valueOf(dto.getTipoSucursal()) == TipoSucursal.PUERTO) throw new ExistePuertoException();
+		if(existeCentro && TipoSucursal.valueOf(dto.getTipoSucursal()) == TipoSucursal.CENTRO) throw new ExisteCentroException();
+		sucursalDao.updateSucursal(dto);
 	}
 }

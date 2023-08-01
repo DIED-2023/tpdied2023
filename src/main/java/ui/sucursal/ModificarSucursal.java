@@ -1,5 +1,6 @@
 package ui.sucursal;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,15 +12,26 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import dominio.EstadoSucursal;
 import dominio.TipoSucursal;
+import dto.BusquedaSucursalDTO;
+import dto.ModificarSucursalDTO;
+import excepciones.ExisteCentroException;
+import excepciones.ExistePuertoException;
+import excepciones.ExisteSucursalException;
+import excepciones.UpdateDBException;
+import gestores.GestorSucursal;
 
 @SuppressWarnings("serial")
 public class ModificarSucursal extends JPanel {
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
+	private GestorSucursal gestorSucursal = GestorSucursal.getInstancia();
+	private BusquedaSucursalDTO dto;
 	private JLabel lblNombre;
 	private JTextField txtNombre;
 	private JLabel lblHorarioApertura;
@@ -33,10 +45,11 @@ public class ModificarSucursal extends JPanel {
 	private JButton btnModificar;
 	private JButton btnCancelar;
 
-	public ModificarSucursal(JFrame ventana, JPanel panelPadre) {
+	public ModificarSucursal(JFrame ventana, JPanel panelPadre, BusquedaSucursalDTO dto) {
 		this.ventana = ventana;
 		this.panelPadre = panelPadre;
 		this.gbc = new GridBagConstraints();
+		this.dto = dto;
 		this.setLayout(new GridBagLayout());
 		this.armarPanel();
 	}
@@ -50,6 +63,7 @@ public class ModificarSucursal extends JPanel {
 		this.add(lblNombre, gbc);
 
 		txtNombre = new JTextField();
+		txtNombre.setText(dto.getNombre());
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridwidth = 2;
@@ -65,7 +79,30 @@ public class ModificarSucursal extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblHorarioApertura, gbc);
 
-		txtHorarioApertura = new JTextField();
+		txtHorarioApertura = new JTextField(5);
+	    // Agregar un DocumentListener para validar el formato mientras el usuario escribe
+	    txtHorarioApertura.getDocument().addDocumentListener(new DocumentListener() {
+	    	@Override
+	        public void insertUpdate(DocumentEvent e) {
+	    		validateTimeFormat();
+	        }
+	        @Override
+	        public void removeUpdate(DocumentEvent e) {
+	        	validateTimeFormat();
+	        }
+	        @Override
+	        public void changedUpdate(DocumentEvent e) {}
+	        private void validateTimeFormat() {
+	        	String text = txtHorarioApertura.getText();
+	            if (!text.matches("^\\d{0,2}:\\d{0,2}$")) {
+	            	// Si el formato no coincide con "hh:mm", mostrar un mensaje de error
+	                txtHorarioApertura.setForeground(Color.RED);
+	             } else {
+	            	 txtHorarioApertura.setForeground(Color.BLACK);
+	             }
+	        }
+	    });
+	    txtHorarioApertura.setText(dto.getHorarioApertura());
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.gridwidth = 2;
@@ -81,7 +118,30 @@ public class ModificarSucursal extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(lblHorarioCierre, gbc);
 
-		txtHorarioCierre = new JTextField();
+		txtHorarioCierre = new JTextField(5);
+	    // Agregar un DocumentListener para validar el formato mientras el usuario escribe
+	    txtHorarioCierre.getDocument().addDocumentListener(new DocumentListener() {
+	    	@Override
+	        public void insertUpdate(DocumentEvent e) {
+	    		validateTimeFormat();
+	        }
+	        @Override
+	        public void removeUpdate(DocumentEvent e) {
+	        	validateTimeFormat();
+	        }
+	        @Override
+	        public void changedUpdate(DocumentEvent e) {}
+	        private void validateTimeFormat() {
+	        	String text = txtHorarioCierre.getText();
+	            if (!text.matches("^\\d{0,2}:\\d{0,2}$")) {
+	            	// Si el formato no coincide con "hh:mm", mostrar un mensaje de error
+	                txtHorarioCierre.setForeground(Color.RED);
+	             } else {
+	            	 txtHorarioCierre.setForeground(Color.BLACK);
+	             }
+	        }
+	    });
+	    txtHorarioCierre.setText(dto.getHorarioCierre());
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
@@ -98,6 +158,7 @@ public class ModificarSucursal extends JPanel {
 		this.add(lblEstado, gbc);
 
 		cbEstado = new JComboBox<>(EstadoSucursal.values());
+		cbEstado.setSelectedItem(EstadoSucursal.valueOf(dto.getEstado()));
 		gbc.gridx = 1;
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
@@ -114,6 +175,7 @@ public class ModificarSucursal extends JPanel {
 		this.add(lblTipoSucursal, gbc);
 
 		cbTipo = new JComboBox<>(TipoSucursal.values());
+		cbTipo.setSelectedItem(TipoSucursal.valueOf(dto.getTipo()));
 		gbc.gridx = 1;
 		gbc.gridy = 4;
 		gbc.gridwidth = 2;
@@ -129,7 +191,45 @@ public class ModificarSucursal extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton guardar
+			if(!validarDatosObligatorios()) {
+				String mensaje = "Todos los campos son obligatorios";
+				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+			}if(txtHorarioApertura.getForeground() == Color.RED || txtHorarioCierre.getForeground() == Color.RED) {
+				String mensaje = "El formato para el horario es 'hh:mm'";
+				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+			}if(txtHorarioApertura.getText().compareTo(txtHorarioCierre.getText()) > 0) {
+				String mensaje = "El horario de apertura no puede ser mayor al horario de cierre";
+				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+			}else {
+				String nombre = txtNombre.getText();
+				String horarioApertura = txtHorarioApertura.getText();
+				String horarioCierre = txtHorarioCierre.getText();
+				String estado = cbEstado.getSelectedItem().toString();
+				String tipoSucursal = cbTipo.getSelectedItem().toString();
+				ModificarSucursalDTO modificarSucursalDto = new ModificarSucursalDTO(dto.getId(),nombre,dto.getNombre(), horarioApertura, horarioCierre, estado, tipoSucursal, dto.getTipo());
+				try {
+					gestorSucursal.modificarSucursal(modificarSucursalDto);
+					mostrarMensajeSucursalModificada();
+				} catch (ExisteSucursalException e1) {
+					String mensaje = "Ya existe una sucursal con ese nombre";
+					int confirmado = JOptionPane.showOptionDialog(this, mensaje, "ERROR", JOptionPane.OK_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
+					if(confirmado == 0) txtNombre.requestFocus();
+				} catch (ExistePuertoException e1) {
+					String mensaje = "Solamente puede haber un único Puerto";
+					int confirmado = JOptionPane.showOptionDialog(this, mensaje, "ERROR", JOptionPane.OK_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
+					if(confirmado == 0) cbTipo.requestFocus();
+				} catch (ExisteCentroException e1) {
+					String mensaje = "Solamente puede haber un único Centro";
+					int confirmado = JOptionPane.showOptionDialog(this, mensaje, "ERROR", JOptionPane.OK_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
+					if(confirmado == 0) cbTipo.requestFocus();
+				} catch (UpdateDBException e1) {
+					String mensaje = "No se ha podido modificar la sucursal";
+					JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 
 		btnCancelar = new JButton("Cancelar");
@@ -147,5 +247,22 @@ public class ModificarSucursal extends JPanel {
 				ventana.setVisible(true);
 			}
 		});
+	}
+	
+	private void mostrarMensajeSucursalModificada() {
+		String mensaje = "La sucursal "+txtNombre.getText()+" ha sido modificada correctamente.";
+		int confirmado = JOptionPane.showOptionDialog(this, mensaje, "INFORMACIÓN", JOptionPane.OK_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
+		if (confirmado == 0) {
+			ventana.setTitle("TP DIED 2023 - Gestión Sucursal");
+			ventana.setContentPane(new GestionSucursal(ventana, panelPadre));
+			ventana.setVisible(true);
+		}
+	}
+
+	private boolean validarDatosObligatorios() {
+		if(txtNombre.getText().isBlank() || txtHorarioApertura.getText().isBlank() 
+				|| txtHorarioCierre.getText().isBlank()) return false;
+		return true;
 	}
 }

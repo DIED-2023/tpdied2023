@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import dto.BusquedaSucursalDTO;
 import dto.SucursalDTO;
 import excepciones.UpdateDBException;
 import gestores.GestorSucursal;
@@ -77,11 +78,12 @@ public class GestionSucursal extends JPanel{
 				txtNombre.requestFocus();
 			}else {
 				for(SucursalDTO s : sucursales) {
-					Object[] dato = new Object[4];
+					Object[] dato = new Object[5];
 					dato[0] = s.getNombre();
 					dato[1] = s.getHorarioApertura();
 					dato[2] = s.getHorarioCierre();
 					dato[3] = s.getEstado();
+					dato[4] = s.getTipo();
 					modelo.addRow(dato);
 				}
 			}
@@ -98,6 +100,7 @@ public class GestionSucursal extends JPanel{
         modelo.addColumn("Horario Apertura");
         modelo.addColumn("Horario Cierre");
         modelo.addColumn("Estado");
+        modelo.addColumn("Tipo");
         for (int i = 0; i < 100; i++) {
             modelo.addRow(new Object[]{""});
         }
@@ -130,9 +133,10 @@ public class GestionSucursal extends JPanel{
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton modificar
-			//Tiene que llevarlo a la ventna ModificarSucursal despues de haber
-			//seleccionado una fila 
+			String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 0);
+			BusquedaSucursalDTO dto = gestorSucursal.getSucursal(nombre);
+			ventana.setContentPane(new ModificarSucursal(ventana, new GestionSucursal(ventana, panelPadre), dto));
+			ventana.setVisible(true);
 		});
 		
 		btnEliminar = new JButton("Eliminar");
