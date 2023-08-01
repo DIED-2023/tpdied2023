@@ -3,6 +3,7 @@ package ui.sucursal;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,13 +16,19 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import dto.SucursalDTO;
+import excepciones.UpdateDBException;
+import gestores.GestorSucursal;
+
 @SuppressWarnings("serial")
 public class GestionSucursal extends JPanel{
 	private JFrame ventana;
 	private JPanel panelPadre;
 	private GridBagConstraints gbc;
+	private GestorSucursal gestorSucursal = GestorSucursal.getInstancia();
 	private JLabel lblNombre;
 	private JTextField txtNombre;
+	private DefaultTableModel modelo;
 	private JTable tabla;
 	private JButton btnBuscar;
 	private JButton btnCancelar;
@@ -59,10 +66,28 @@ public class GestionSucursal extends JPanel{
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnBuscar, gbc);
 		btnBuscar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton buscar
+			modelo.setRowCount(0);// Borra todas las filas actuales de la tabla
+			List<SucursalDTO> sucursales = gestorSucursal.buscarSucursalesPorNombre(txtNombre.getText());
+			if(sucursales.isEmpty()) {
+				for (int i = 0; i < 100; i++) {
+					 modelo.addRow(new Object[]{""});
+			    }
+				String mensaje = "No existen sucursales según el nombre ingresado";
+				JOptionPane.showMessageDialog(this, mensaje, "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+				txtNombre.requestFocus();
+			}else {
+				for(SucursalDTO s : sucursales) {
+					Object[] dato = new Object[4];
+					dato[0] = s.getNombre();
+					dato[1] = s.getHorarioApertura();
+					dato[2] = s.getHorarioCierre();
+					dato[3] = s.getEstado();
+					modelo.addRow(dato);
+				}
+			}
 		});
 		
-		DefaultTableModel modelo = new DefaultTableModel() {
+		modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 // Para que las celdas no sean editables
@@ -76,9 +101,21 @@ public class GestionSucursal extends JPanel{
         for (int i = 0; i < 100; i++) {
             modelo.addRow(new Object[]{""});
         }
-		
+
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tabla.setAutoCreateRowSorter(true);// Ordena por la primera columna
+        // Agrega un oyente para habilitar el botón "Modificar" cuando se selecciona una fila con datos
+        tabla.getSelectionModel().addListSelectionListener(e -> {
+            int selectedRow = tabla.getSelectedRow();
+            if (selectedRow >= 0 && !modelo.getValueAt(selectedRow, 0).toString().isEmpty()) {
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+            } else {
+                btnModificar.setEnabled(false);
+                btnEliminar.setEnabled(false);
+            }
+        });
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 5;
@@ -86,6 +123,7 @@ public class GestionSucursal extends JPanel{
 		this.add(new JScrollPane(tabla), gbc);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.setEnabled(false);
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
@@ -98,11 +136,23 @@ public class GestionSucursal extends JPanel{
 		});
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setEnabled(false);
 		gbc.gridx = 3;
 		gbc.gridy = 2;
 		this.add(btnEliminar, gbc);
 		btnEliminar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton eliminar
+			String mensaje = "¿Está seguro que desea eliminar la sucursal?";
+			int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,new Object[] {"SI","NO"}, "SI");
+			if(confirmado == 0) {
+				String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 0);
+				try {
+					gestorSucursal.eliminarSucursal(nombre);
+					mostrarMensajeSucursalBorrada();
+				} catch (UpdateDBException e1) {
+					String msj = "No se ha podido borrar la sucursal";
+					JOptionPane.showMessageDialog(this, msj, "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		
 		btnCancelar = new JButton("Cancelar");
@@ -126,5 +176,20 @@ public class GestionSucursal extends JPanel{
 					ventana.setVisible(true);
 				}
 		});
+	}
+
+	private void mostrarMensajeSucursalBorrada() {
+		String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 0);
+		String mensaje = "La sucursal "+nombre+" ha sido borrada correctamente. ¿Desea seguir gestionando sucursales?";
+		int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, new Object[] { "SI", "NO" }, "SI");
+		if(confirmado == 0) {
+			ventana.setContentPane(new GestionSucursal(ventana, panelPadre));
+			ventana.setVisible(true);
+		}else {
+			ventana.setTitle("TP DIEDE 2023 - Menú Sucursal");
+			ventana.setContentPane(panelPadre);
+			ventana.setVisible(true);
+		}
 	}
 }

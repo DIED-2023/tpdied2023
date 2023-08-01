@@ -21,6 +21,7 @@ import dto.AltaSucursalDTO;
 import excepciones.ExisteCentroException;
 import excepciones.ExistePuertoException;
 import excepciones.ExisteSucursalException;
+import excepciones.UpdateDBException;
 import gestores.GestorSucursal;
 
 @SuppressWarnings("serial")
@@ -216,6 +217,9 @@ public class AltaSucursal extends JPanel {
 					int confirmado = JOptionPane.showOptionDialog(this, mensaje, "ERROR", JOptionPane.OK_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, new Object[] { "Aceptar"}, "Aceptar");
 					if(confirmado == 0) cbTipo.requestFocus();
+				} catch (UpdateDBException e1) {
+					String mensaje = "No se ha podido guardar la sucursal";
+					JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

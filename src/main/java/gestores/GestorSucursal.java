@@ -1,13 +1,18 @@
 package gestores;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dao.factory.FactoryDao;
 import dao.interfaces.SucursalDao;
 import dominio.Sucursal;
 import dominio.TipoSucursal;
 import dto.AltaSucursalDTO;
+import dto.SucursalDTO;
 import excepciones.ExisteCentroException;
 import excepciones.ExistePuertoException;
 import excepciones.ExisteSucursalException;
+import excepciones.UpdateDBException;
 
 public final class GestorSucursal {
 	private static GestorSucursal instancia;
@@ -28,7 +33,7 @@ public final class GestorSucursal {
 		throw new CloneNotSupportedException();
 	}
 	
-	public void altaSucursal(AltaSucursalDTO altaSucursalDto) throws ExisteSucursalException, ExistePuertoException, ExisteCentroException{
+	public void altaSucursal(AltaSucursalDTO altaSucursalDto) throws ExisteSucursalException, ExistePuertoException, ExisteCentroException, UpdateDBException{
 		boolean existeSucursal = sucursalDao.existeSucursal(altaSucursalDto.getNombre());
 		if(existeSucursal) throw new ExisteSucursalException();
 		boolean existePuerto = sucursalDao.existePuerto();
@@ -42,5 +47,15 @@ public final class GestorSucursal {
 		s.setEstado(altaSucursalDto.getEstado());
 		s.setTipo(altaSucursalDto.getTipoSucursal());
 		sucursalDao.guardar(s);
+	}
+	
+	public List<SucursalDTO> buscarSucursalesPorNombre(String nombre) {
+		List<SucursalDTO> sucursales = new ArrayList<SucursalDTO>();
+		sucursales = sucursalDao.getSucursalesPorNombre(nombre);
+		return sucursales;
+	}
+	
+	public void eliminarSucursal(String nombre) throws UpdateDBException{
+		sucursalDao.deleteSucursal(nombre);
 	}
 }
