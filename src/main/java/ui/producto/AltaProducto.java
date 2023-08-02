@@ -16,8 +16,6 @@ import excepciones.ExisteProductoException;
 import excepciones.UpdateDBException;
 import gestores.GestorProducto;
 
-
-
 @SuppressWarnings("serial")
 public class AltaProducto extends JPanel {
 	private JFrame ventana;
@@ -122,7 +120,6 @@ public class AltaProducto extends JPanel {
 			}else {
 				String nombre = txtNombre.getText();
 				String descripcion = txtDescripcion.getText();
-				//contarle a exe que utilice Double.parseDouble para convertir de string a double
 				Double precioUnitario = Double.parseDouble(txtPrecioUnitario.getText());
 				Double pesoKg = Double.parseDouble(txtPesoKg.getText());
 				AltaProductoDTO altaProductoDto = new AltaProductoDTO(nombre, descripcion, precioUnitario,pesoKg);
@@ -160,7 +157,7 @@ public class AltaProducto extends JPanel {
 						new Object[] {"SI","NO"}, 
 						"SI");
 				if(confirmado == 0) {
-					ventana.setTitle("TP DIEDE 2023 - Menú Producto");
+					ventana.setTitle("TP DIED 2023 - Menú Producto");
 					ventana.setContentPane(panelPadre);
 					ventana.setVisible(true);
 				}
@@ -168,19 +165,18 @@ public class AltaProducto extends JPanel {
 	}
 
 	private void mostrarMensajProductoAgregado() {
-		String mensaje = "El producto  "+txtNombre.getText()+" ha sido agregada correctamente. ¿Desea cargar otro producto?";
+		String mensaje = "El producto  "+txtNombre.getText()+" ha sido agregado correctamente. ¿Desea cargar otro producto?";
 		int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, new Object[] { "SI", "NO" }, "SI");
 		if (confirmado == 0) {
 			ventana.setContentPane(new AltaProducto(ventana, panelPadre));
 			ventana.setVisible(true);
 		}else {
-			ventana.setTitle("TP DIEDE 2023 - Menú Producto");
+			ventana.setTitle("TP DIED 2023 - Menú Producto");
 			ventana.setContentPane(panelPadre);
 			ventana.setVisible(true);
 		}
 	}
-	
 	
 	private boolean validarDatosObligatorios() {
 		if(txtNombre.getText().isBlank() || txtDescripcion.getText().isBlank() 

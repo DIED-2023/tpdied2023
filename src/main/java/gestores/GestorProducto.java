@@ -28,17 +28,16 @@ public final class GestorProducto {
 		throw new CloneNotSupportedException();
 	}
 	
-	public void altaProducto(AltaProductoDTO altaPorductoDto) throws ExisteProductoException, UpdateDBException{
-		boolean existeProducto = productoDao.existeProducto(altaPorductoDto.getNombre());
+	public void altaProducto(AltaProductoDTO altaProductoDto) throws ExisteProductoException, UpdateDBException{
+		boolean existeProducto = productoDao.existeProducto(altaProductoDto.getNombre());
 		if(existeProducto) throw new ExisteProductoException();
 		Producto p = new Producto();
-		p.setNombre(altaPorductoDto.getNombre());
-		p.setDescripcion(altaPorductoDto.getDescripcion());
-		p.setPrecioUnitario(altaPorductoDto.getPrecioUnitario());
-		p.setPesoKg(altaPorductoDto.getPesoKg());
+		p.setNombre(altaProductoDto.getNombre());
+		p.setDescripcion(altaProductoDto.getDescripcion());
+		p.setPrecioUnitario(altaProductoDto.getPrecioUnitario());
+		p.setPesoKg(altaProductoDto.getPesoKg());
 		productoDao.guardar(p);
 	}
-	
 	
 	public void modificarProducto(ModificarProductoDTO dto) throws ExisteSucursalException, UpdateDBException {
 		boolean existeProducto = false;
@@ -52,5 +51,4 @@ public final class GestorProducto {
 	public void eliminarProducto(String nombre) throws UpdateDBException {
 		productoDao.deleteProducto(nombre);
 	}
-	
 }

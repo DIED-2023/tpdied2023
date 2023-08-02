@@ -3,7 +3,6 @@ package ui.producto;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,10 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import dto.SucursalDTO;
 import excepciones.UpdateDBException;
 import gestores.GestorProducto;
-import ui.sucursal.GestionSucursal;
 
 @SuppressWarnings("serial")
 public class GestionProducto extends JPanel {

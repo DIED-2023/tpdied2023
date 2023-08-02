@@ -56,8 +56,8 @@ public class ProductoPGDao implements ProductoDao {
 			pstm = conn.prepareStatement("INSERT INTO producto (nombre,descripcion,precio_unitario,peso_kg) VALUES (?,?,?,?)");
 			pstm.setString(1, producto.getNombre());
 			pstm.setString(2, producto.getDescripcion());
-			pstm.setString(3, producto.getPrecioUnitario().toString());
-			pstm.setString(4, producto.getPesoKg().toString());
+			pstm.setDouble(3, producto.getPrecioUnitario());
+			pstm.setDouble(4, producto.getPesoKg());
 			pstm.executeUpdate();
 			conn.commit();
 		}catch (PGException | SQLException e) {
