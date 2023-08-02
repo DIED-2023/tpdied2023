@@ -3,6 +3,7 @@ package ui.producto;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import dto.BusquedaProductoDTO;
+import dto.ProductoDTO;
 import excepciones.UpdateDBException;
 import gestores.GestorProducto;
 
@@ -64,16 +67,34 @@ public class GestionProducto extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnBuscar, gbc);
 		btnBuscar.addActionListener(e -> {
-		 // TODO: Agregar funcionamiento boton buscar
+			modelo.setRowCount(0);// Borra todas las filas actuales de la tabla
+			List<ProductoDTO> productos = gestorProducto.buscarProductosPorNombre(txtProducto.getText());
+			if(productos.isEmpty()) {
+				for (int i = 0; i < 100; i++) {
+					 modelo.addRow(new Object[]{""});
+			    }
+				String mensaje = "No existen productos según el nombre ingresado";
+				JOptionPane.showMessageDialog(this, mensaje, "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+				txtProducto.requestFocus();
+			}else {
+				for(ProductoDTO p : productos) {
+					Object[] dato = new Object[4];
+					dato[0] = p.getNombre();
+					dato[1] = p.getDescripcion();
+					dato[2] = p.getPrecioUnitario();
+					dato[3] = p.getPesoKg();
+					modelo.addRow(dato);
+				}
+			}
 		});
 
-		DefaultTableModel modelo = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				// Para que las celdas no sean editables
-				return false;
-			}
-		};
+		modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Para que las celdas no sean editables
+                return false;
+            }
+        };
 		modelo.addColumn("Nombre");
 		modelo.addColumn("Descripcion");
 		modelo.addColumn("Precio Unitario");
@@ -84,6 +105,18 @@ public class GestionProducto extends JPanel {
 
 		tabla = new JTable(modelo);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tabla.setAutoCreateRowSorter(true);// Ordena por la primera columna
+        // Agrega un oyente para habilitar el botón "Modificar" cuando se selecciona una fila con datos
+        tabla.getSelectionModel().addListSelectionListener(e -> {
+            int selectedRow = tabla.getSelectedRow();
+            if (selectedRow >= 0 && !modelo.getValueAt(selectedRow, 0).toString().isEmpty()) {
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+            } else {
+                btnModificar.setEnabled(false);
+                btnEliminar.setEnabled(false);
+            }
+        });
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 5;
@@ -91,18 +124,22 @@ public class GestionProducto extends JPanel {
 		this.add(new JScrollPane(tabla), gbc);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.setEnabled(false);
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(btnModificar, gbc);
 		btnModificar.addActionListener(e -> {
-			//TODO: Agregar funcionamiento boton modificar
-			//Tiene que llevarlo a la ventna ModificarSucursal despues de haber
-			//seleccionado una fila 
+			String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 0);
+			BusquedaProductoDTO dto = gestorProducto.getProducto(nombre);
+			ventana.setTitle("TP DIED 2023 - Modificar Producto");
+			ventana.setContentPane(new ModificarProducto(ventana, new GestionProducto(ventana, panelPadre), dto));
+			ventana.setVisible(true);
 		});
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setEnabled(false);
 		gbc.gridx = 3;
 		gbc.gridy = 2;
 		this.add(btnEliminar, gbc);
@@ -113,7 +150,7 @@ public class GestionProducto extends JPanel {
 				String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 0);
 				try {
 					gestorProducto.eliminarProducto(nombre);
-					mostrarMensajeProductoBorrada();
+					mostrarMensajeProductoBorrado();
 				} catch (UpdateDBException e1) {
 					String msj = "No se ha podido borrar el producto";
 					JOptionPane.showMessageDialog(this, msj, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -131,14 +168,14 @@ public class GestionProducto extends JPanel {
 			int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null, new Object[] { "SI", "NO" }, "SI");
 			if (confirmado == 0) {
-				ventana.setTitle("TP DIEDE 2023 - Menú Producto");
+				ventana.setTitle("TP DIED 2023 - Menú Producto");
 				ventana.setContentPane(panelPadre);
 				ventana.setVisible(true);
 			}
 		});
 	}
 	
-	private void mostrarMensajeProductoBorrada() {
+	private void mostrarMensajeProductoBorrado() {
 		String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 0);
 		String mensaje = "El producto "+nombre+" ha sido borrada correctamente. ¿Desea seguir gestionando productos?";
 		int confirmado = JOptionPane.showOptionDialog(this, mensaje, "CONFIRMACION", JOptionPane.YES_NO_OPTION,
@@ -147,10 +184,9 @@ public class GestionProducto extends JPanel {
 			ventana.setContentPane(new GestionProducto(ventana, panelPadre));
 			ventana.setVisible(true);
 		}else {
-			ventana.setTitle("TP DIEDE 2023 - Menú Producto");
+			ventana.setTitle("TP DIED 2023 - Menú Producto");
 			ventana.setContentPane(panelPadre);
 			ventana.setVisible(true);
 		}
 	}
-	
 }

@@ -1,5 +1,6 @@
 package ui.producto;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import dto.AltaProductoDTO;
 import excepciones.ExisteProductoException;
@@ -83,6 +86,26 @@ public class AltaProducto extends JPanel {
 		this.add(lblPrecioUnitario, gbc);
 		
 		txtPrecioUnitario = new JTextField();
+		txtPrecioUnitario.getDocument().addDocumentListener(new DocumentListener() {
+	    	@Override
+	        public void insertUpdate(DocumentEvent e) {
+	    		validateDoubleFormat();
+	        }
+	        @Override
+	        public void removeUpdate(DocumentEvent e) {
+	        	validateDoubleFormat();
+	        }
+	        @Override
+	        public void changedUpdate(DocumentEvent e) {}
+	        private void validateDoubleFormat() {
+	        	String text = txtPrecioUnitario.getText();
+	            if (!text.matches("\\d*(\\.\\d{0,2})?")) {
+	                txtPrecioUnitario.setForeground(Color.RED);
+	             } else {
+	            	 txtPrecioUnitario.setForeground(Color.BLACK);
+	             }
+	        }
+	    });
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
@@ -99,6 +122,26 @@ public class AltaProducto extends JPanel {
 		this.add(lblPesoKg, gbc);
 		
 		txtPesoKg = new JTextField();
+		txtPesoKg.getDocument().addDocumentListener(new DocumentListener() {
+	    	@Override
+	        public void insertUpdate(DocumentEvent e) {
+	    		validateDoubleFormat();
+	        }
+	        @Override
+	        public void removeUpdate(DocumentEvent e) {
+	        	validateDoubleFormat();
+	        }
+	        @Override
+	        public void changedUpdate(DocumentEvent e) {}
+	        private void validateDoubleFormat() {
+	        	String text = txtPesoKg.getText();
+	            if (!text.matches("\\d*(\\.\\d{0,2})?")) {
+	                txtPesoKg.setForeground(Color.RED);
+	             } else {
+	            	 txtPesoKg.setForeground(Color.BLACK);
+	             }
+	        }
+	    });
 		gbc.gridx = 1;
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
@@ -116,6 +159,9 @@ public class AltaProducto extends JPanel {
 		btnGuardar.addActionListener(e -> {
 			if(!validarDatosObligatorios()) {
 				String mensaje = "Todos los campos son obligatorios";
+				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+			}if(txtPrecioUnitario.getForeground() == Color.RED || txtPesoKg.getForeground() == Color.RED) {
+				String mensaje = "El formato para los campos 'PRECIO UNITARIO' y 'PESO' es '9999.99'";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
 			}else {
 				String nombre = txtNombre.getText();

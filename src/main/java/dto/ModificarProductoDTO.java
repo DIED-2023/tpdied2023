@@ -7,6 +7,7 @@ public class ModificarProductoDTO {
 	private String descripcion;
 	private Double precioUnitario;
 	private Double pesoKg;
+	
 	public ModificarProductoDTO(Integer id, String nombre, String nombreAnterior, String descripcion,
 			Double precioUnitario, Double pesoKg) {
 		super();
