@@ -17,7 +17,6 @@ CREATE TABLE producto(
 
 CREATE TABLE orden_provision(
 	id serial primary key,
-	nombre varchar(50) not null unique,
 	fecha date not null,
 	estado varchar(50) not null,
 	tiempo real not null,

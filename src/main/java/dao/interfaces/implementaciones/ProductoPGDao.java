@@ -11,6 +11,7 @@ import dao.interfaces.ProductoDao;
 import dominio.Producto;
 import dto.BusquedaProductoDTO;
 import dto.ModificarProductoDTO;
+import dto.ProductoComboBoxDTO;
 import dto.ProductoDTO;
 import excepciones.PGException;
 import excepciones.UpdateDBException;
@@ -222,5 +223,41 @@ public class ProductoPGDao implements ProductoDao {
 			}
 		}
 		return producto;
+	}
+
+	@Override
+	public List<ProductoComboBoxDTO> getProductos() {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<ProductoComboBoxDTO> productos = new ArrayList<ProductoComboBoxDTO>();
+		try {
+			conn = ConexionDB.getConexion();
+			pstm = conn.prepareStatement("SELECT id,nombre FROM producto");
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				String nombre = rs.getString("nombre");
+				ProductoComboBoxDTO p = new ProductoComboBoxDTO(id,nombre);
+				productos.add(p);
+			}
+		} catch (SQLException | PGException e) {}
+		finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				}catch(SQLException e) {}
+			}
+			if(pstm != null) {
+				try {
+					pstm.close();
+				}catch(SQLException e) {}
+			}if(conn != null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {}
+			}
+		}
+		return productos;
 	}		
 }

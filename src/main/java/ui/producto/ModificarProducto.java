@@ -166,7 +166,7 @@ public class ModificarProducto extends JPanel {
 			if(!validarDatosObligatorios()) {
 				String mensaje = "Todos los campos son obligatorios";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
-			}if(txtPrecioUnitario.getForeground() == Color.RED || txtPesoKg.getForeground() == Color.RED) {
+			}else if(txtPrecioUnitario.getForeground() == Color.RED || txtPesoKg.getForeground() == Color.RED) {
 				String mensaje = "El formato para los campos 'PRECIO UNITARIO' y 'PESO' es '9999.99'";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
 			}else {

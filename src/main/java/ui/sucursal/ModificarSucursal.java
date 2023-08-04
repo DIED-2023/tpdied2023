@@ -194,10 +194,10 @@ public class ModificarSucursal extends JPanel {
 			if(!validarDatosObligatorios()) {
 				String mensaje = "Todos los campos son obligatorios";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
-			}if(txtHorarioApertura.getForeground() == Color.RED || txtHorarioCierre.getForeground() == Color.RED) {
+			}else if(txtHorarioApertura.getForeground() == Color.RED || txtHorarioCierre.getForeground() == Color.RED) {
 				String mensaje = "El formato para el horario es 'hh:mm'";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
-			}if(txtHorarioApertura.getText().compareTo(txtHorarioCierre.getText()) > 0) {
+			}else if(txtHorarioApertura.getText().compareTo(txtHorarioCierre.getText()) > 0) {
 				String mensaje = "El horario de apertura no puede ser mayor al horario de cierre";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
 			}else {

@@ -1,11 +1,16 @@
 package dto;
 
 public class SucursalDTO {
+	private Integer id;
 	private String nombre;
 	private String horarioApertura;
 	private String horarioCierre;
 	private String estado;
 	private String tipo;
+	
+	public Integer getId() {
+		return id;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -25,6 +30,10 @@ public class SucursalDTO {
 	
 	public String getTipo() {
 		return tipo;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setNombre(String nombre) {

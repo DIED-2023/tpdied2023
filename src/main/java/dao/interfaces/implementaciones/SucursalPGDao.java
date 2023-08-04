@@ -11,6 +11,7 @@ import dao.interfaces.SucursalDao;
 import dominio.Sucursal;
 import dto.BusquedaSucursalDTO;
 import dto.ModificarSucursalDTO;
+import dto.SucursalComboBoxDTO;
 import dto.SucursalDTO;
 import excepciones.PGException;
 import excepciones.UpdateDBException;
@@ -161,6 +162,7 @@ public class SucursalPGDao implements SucursalDao {
 			rs = pstm.executeQuery();
 			while(rs.next()) {
 				SucursalDTO s = new SucursalDTO();
+				s.setId(rs.getInt("id"));
 				s.setNombre(rs.getString("nombre"));
 				s.setHorarioApertura(rs.getString("horario_apertura"));
 				s.setHorarioCierre(rs.getString("horario_cierre"));
@@ -290,5 +292,41 @@ public class SucursalPGDao implements SucursalDao {
 				}catch(SQLException e) {}
 			}
 		}
+	}
+
+	@Override
+	public List<SucursalComboBoxDTO> getSucursales() {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<SucursalComboBoxDTO> sucursales = new ArrayList<SucursalComboBoxDTO>();
+		try {
+			conn = ConexionDB.getConexion();
+			pstm = conn.prepareStatement("SELECT id,nombre FROM sucursal");
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				String nombre = rs.getString("nombre");
+				SucursalComboBoxDTO s = new SucursalComboBoxDTO(id,nombre);
+				sucursales.add(s);
+			}
+		} catch (SQLException | PGException e) {}
+		finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				}catch(SQLException e) {}
+			}
+			if(pstm != null) {
+				try {
+					pstm.close();
+				}catch(SQLException e) {}
+			}if(conn != null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {}
+			}
+		}
+		return sucursales;
 	}
 }
