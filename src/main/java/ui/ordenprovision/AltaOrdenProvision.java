@@ -265,7 +265,7 @@ public class AltaOrdenProvision extends JPanel {
 			if(tabla.getRowCount() == 0) {
 				String mensaje = "La tabla no puede estar vacía";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
-			}else if(txtTiempo.getBackground() == Color.RED) {
+			}else if(txtTiempo.getForeground() == Color.RED) {
 				String mensaje = "El formato para el campo TIEMPO es 'HH.MM'";
 				JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
