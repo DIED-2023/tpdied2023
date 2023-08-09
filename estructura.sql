@@ -40,6 +40,7 @@ CREATE TABLE stock(
 CREATE TABLE ruta(
 	id serial primary key,
 	capacidad real not null,
+	duracion real not null,
 	estado varchar(50) not null,
 	id_sucursal_origen integer references sucursal(id) not null,
 	id_sucursal_destino integer references sucursal(id) not null
